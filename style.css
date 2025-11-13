@@ -1,110 +1,51 @@
-/* style.css */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #fff5f5;
-}
-
-header {
-    background-color: #d32f2f;
-    padding: 15px;
-    text-align: center;
-}
-
-nav a {
-    color: white;
-    margin: 0 15px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-nav a:hover {
-    text-decoration: underline;
-}
-
-.hero {
-    text-align: center;
-    padding: 100px 20px;
-    background-color: #f8d7da;
-}
-
-.hero h1 {
-    font-size: 48px;
-    margin-bottom: 20px;
-}
-
-.hero p {
-    font-size: 20px;
-    margin-bottom: 30px;
-}
-
-.btn {
-    background-color: #d32f2f;
-    color: white;
-    padding: 10px 20px;
-    margin: 10px;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.btn:hover {
-    background-color: #b71c1c;
-}
-
-/* Form styling */
-form {
-    max-width: 400px;
-    margin: 50px auto;
-    background-color: #fff5f5;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-form input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-form button {
-    width: 100%;
-    padding: 12px;
-    background-color: #d32f2f;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-form button:hover {
-    background-color: #b71c1c;
-}
-
-/* Blog Page */
+/* Blog Section */
 .blog {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 50px auto;
-    text-align: center;
+    padding: 0 20px;
 }
 
+.blog h2 {
+    text-align: center;
+    color: #d32f2f;
+    margin-bottom: 40px;
+}
+
+/* Two-column grid layout */
+.blog-posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+/* Blog card styling */
 .blog-post {
-    background-color: #fff5f5;
-    margin: 20px;
-    padding: 20px;
+    background-color: white;
     border-radius: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.blog-post img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
 }
 
 .blog-post h3 {
     color: #d32f2f;
+    margin: 15px;
+}
+
+.blog-post p {
+    margin: 0 15px 15px 15px;
+    line-height: 1.5;
 }
 
 .blog-post a {
+    display: inline-block;
+    margin: 0 15px 15px 15px;
     text-decoration: none;
     color: #d32f2f;
     font-weight: bold;
@@ -112,4 +53,17 @@ form button:hover {
 
 .blog-post a:hover {
     text-decoration: underline;
+}
+
+/* Hover effect on cards */
+.blog-post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Responsive adjustments for small screens */
+@media (max-width: 768px) {
+    .blog-post img {
+        height: 180px;
+    }
 }
