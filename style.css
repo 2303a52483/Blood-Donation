@@ -1,35 +1,85 @@
-/* SUCCESS PAGE DESIGN */
-.success-page {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(to right, #ff4d4d, #b30000);
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #f8f8f8;
+}
+
+header {
+    background: #b30000;
     color: white;
+    padding: 15px;
     text-align: center;
 }
 
-.success-page h1 {
-    font-size: 40px;
-    margin-bottom: 15px;
+nav a {
+    color: white;
+    margin: 10px;
+    text-decoration: none;
+    font-weight: bold;
 }
 
-.success-page p {
-    font-size: 20px;
-    margin-bottom: 25px;
+.hero {
+    text-align: center;
+    padding: 80px;
+    background: linear-gradient(to right, #ff4d4d, #b30000);
+    color: white;
 }
 
-.success-page button {
-    padding: 12px 25px;
+.btn {
     background: white;
-    color: #b30000;
-    border: none;
+    color: red;
+    padding: 10px 20px;
+    margin: 10px;
+    text-decoration: none;
     border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
 }
 
-.success-page button:hover {
-    background: #ffe6e6;
+.btn-outline {
+    border: 2px solid white;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+form {
+    width: 300px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #b30000;
+    color: white;
+    border: none;
+}
+
+.blog {
+    text-align: center;
+    padding: 40px;
+}
+
+.card {
+    background: white;
+    margin: 20px auto;
+    padding: 20px;
+    width: 300px;
+    border-radius: 10px;
+}
+
+footer {
+    text-align: center;
+    background: #b30000;
+    color: white;
+    padding: 10px;
 }
