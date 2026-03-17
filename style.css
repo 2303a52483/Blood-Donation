@@ -8,15 +8,13 @@ body {
     color: white;
 }
 
-/* ========================= */
 /* HEADER */
-/* ========================= */
 header {
     text-align: center;
     padding: 15px;
 }
 
-/* NAVIGATION */
+/* NAV */
 nav a {
     color: white;
     margin: 10px;
@@ -24,9 +22,7 @@ nav a {
     font-weight: bold;
 }
 
-/* ========================= */
-/* HERO SECTION */
-/* ========================= */
+/* HERO */
 .hero {
     text-align: center;
     padding: 80px 20px;
@@ -39,9 +35,7 @@ nav a {
     border-radius: 10px;
 }
 
-/* ========================= */
 /* BUTTONS */
-/* ========================= */
 .btn {
     background: white;
     color: #b30000;
@@ -58,9 +52,7 @@ nav a {
     border-radius: 5px;
 }
 
-/* ========================= */
-/* IMAGE SECTION (Donate Page) */
-/* ========================= */
+/* IMAGE SECTION */
 .image-section {
     text-align: center;
     margin-top: 20px;
@@ -71,9 +63,7 @@ nav a {
     border-radius: 10px;
 }
 
-/* ========================= */
 /* FORM */
-/* ========================= */
 form {
     width: 300px;
     margin: 40px auto;
@@ -83,14 +73,14 @@ form {
     color: black;
 }
 
-/* INPUT FIELDS */
+/* INPUT */
 input, select {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
 }
 
-/* SUBMIT BUTTON */
+/* BUTTON */
 button {
     width: 100%;
     padding: 10px;
@@ -98,12 +88,9 @@ button {
     color: white;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
 }
 
-/* ========================= */
-/* BLOG SECTION */
-/* ========================= */
+/* BLOG */
 .blog {
     text-align: center;
     padding: 40px;
@@ -119,16 +106,13 @@ button {
     color: black;
 }
 
-/* BLOG IMAGE */
 .card img {
     width: 100%;
     border-radius: 10px;
     margin-bottom: 10px;
 }
 
-/* ========================= */
-/* VIDEO (BLOG PAGE) */
-/* ========================= */
+/* VIDEO */
 .video-container {
     display: flex;
     justify-content: center;
@@ -141,17 +125,13 @@ button {
     border-radius: 10px;
 }
 
-/* ========================= */
 /* FOOTER */
-/* ========================= */
 footer {
     text-align: center;
     padding: 10px;
 }
 
-/* ========================= */
-/* MESSAGE POPUP */
-/* ========================= */
+/* MESSAGE BOX */
 .message-box {
     position: fixed;
     top: 30%;
@@ -162,13 +142,4 @@ footer {
     border-radius: 10px;
     text-align: center;
     color: black;
-}
-
-.message-box button {
-    padding: 10px 20px;
-    background: #b30000;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 }
