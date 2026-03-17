@@ -1,4 +1,6 @@
-/* BODY - FULL BLOOD THEME */
+/* ========================= */
+/* FULL PAGE BLOOD THEME */
+/* ========================= */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -6,11 +8,12 @@ body {
     color: white;
 }
 
+/* ========================= */
 /* HEADER */
+/* ========================= */
 header {
-    background: transparent;
-    padding: 15px;
     text-align: center;
+    padding: 15px;
 }
 
 /* NAVIGATION */
@@ -21,7 +24,9 @@ nav a {
     font-weight: bold;
 }
 
+/* ========================= */
 /* HERO SECTION */
+/* ========================= */
 .hero {
     text-align: center;
     padding: 80px 20px;
@@ -34,7 +39,9 @@ nav a {
     border-radius: 10px;
 }
 
+/* ========================= */
 /* BUTTONS */
+/* ========================= */
 .btn {
     background: white;
     color: #b30000;
@@ -42,35 +49,48 @@ nav a {
     margin: 10px;
     text-decoration: none;
     border-radius: 5px;
-    font-weight: bold;
 }
 
 .btn-outline {
     border: 2px solid white;
     color: white;
     padding: 10px 20px;
-    text-decoration: none;
     border-radius: 5px;
 }
 
-/* FORMS */
+/* ========================= */
+/* IMAGE SECTION (Donate Page) */
+/* ========================= */
+.image-section {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.image-section img {
+    width: 300px;
+    border-radius: 10px;
+}
+
+/* ========================= */
+/* FORM */
+/* ========================= */
 form {
     width: 300px;
     margin: 40px auto;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255,255,255,0.9);
     border-radius: 10px;
     color: black;
 }
 
-/* INPUTS */
+/* INPUT FIELDS */
 input, select {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
 }
 
-/* BUTTON */
+/* SUBMIT BUTTON */
 button {
     width: 100%;
     padding: 10px;
@@ -81,28 +101,57 @@ button {
     cursor: pointer;
 }
 
-/* BLOG */
+/* ========================= */
+/* BLOG SECTION */
+/* ========================= */
 .blog {
     text-align: center;
     padding: 40px;
 }
 
+/* BLOG CARDS */
 .card {
-    background: rgba(255, 255, 255, 0.9);
-    margin: 20px auto;
+    background: rgba(255,255,255,0.9);
     padding: 20px;
+    margin: 20px auto;
     width: 300px;
     border-radius: 10px;
     color: black;
 }
 
+/* BLOG IMAGE */
+.card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* ========================= */
+/* VIDEO (BLOG PAGE) */
+/* ========================= */
+.video-container {
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+}
+
+.video-container iframe {
+    width: 80%;
+    height: 400px;
+    border-radius: 10px;
+}
+
+/* ========================= */
 /* FOOTER */
+/* ========================= */
 footer {
     text-align: center;
     padding: 10px;
 }
 
-/* MESSAGE BOX */
+/* ========================= */
+/* MESSAGE POPUP */
+/* ========================= */
 .message-box {
     position: fixed;
     top: 30%;
@@ -113,4 +162,13 @@ footer {
     border-radius: 10px;
     text-align: center;
     color: black;
+}
+
+.message-box button {
+    padding: 10px 20px;
+    background: #b30000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
