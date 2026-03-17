@@ -1,19 +1,56 @@
-document.getElementById("donateForm")?.addEventListener("submit", function (e) {
+// Donate Form - Full Page Success
+document.getElementById("donateForm")?.addEventListener("submit", function(e) {
     e.preventDefault();
-    alert("Thank you for donating blood! ❤️");
+
+    document.body.innerHTML = `
+        <div class="success-page">
+            <h1>❤️ Thank You for Donating Blood ❤️</h1>
+            <p>Your contribution can save lives!</p>
+            <button onclick="goHome()">Go Home</button>
+        </div>
+    `;
 });
 
-document.getElementById("requestForm")?.addEventListener("submit", function (e) {
+// Request Blood Form
+document.getElementById("requestForm")?.addEventListener("submit", function(e) {
     e.preventDefault();
-    alert("Blood request submitted successfully!");
+
+    document.body.innerHTML = `
+        <div class="success-page">
+            <h1>🩸 Request Submitted Successfully</h1>
+            <p>We will connect you with donors soon.</p>
+            <button onclick="goHome()">Go Home</button>
+        </div>
+    `;
 });
 
-document.getElementById("loginForm")?.addEventListener("submit", function (e) {
+// Login Form
+document.getElementById("loginForm")?.addEventListener("submit", function(e) {
     e.preventDefault();
-    alert("Login successful (demo only)");
+
+    document.body.innerHTML = `
+        <div class="success-page">
+            <h1>✅ Login Successful</h1>
+            <p>Welcome back!</p>
+            <button onclick="goHome()">Go Home</button>
+        </div>
+    `;
 });
 
-document.getElementById("signupForm")?.addEventListener("submit", function (e) {
+// Signup Form
+document.getElementById("signupForm")?.addEventListener("submit", function(e) {
     e.preventDefault();
-    alert("Signup successful! 🎉");
+
+    document.body.innerHTML = `
+        <div class="success-page">
+            <h1>🎉 Signup Successful</h1>
+            <p>Your account has been created.</p>
+            <button onclick="goHome()">Go Home</button>
+        </div>
+    `;
 });
+
+// Go Home Function
+function goHome() {
+    window.location.href = "index.html";
+}
