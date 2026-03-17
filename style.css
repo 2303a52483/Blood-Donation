@@ -1,4 +1,4 @@
-/* BODY - FULL PAGE BLOOD THEME */
+/* BODY - FULL BLOOD THEME */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -9,7 +9,6 @@ body {
 /* HEADER */
 header {
     background: transparent;
-    color: white;
     padding: 15px;
     text-align: center;
 }
@@ -26,6 +25,13 @@ nav a {
 .hero {
     text-align: center;
     padding: 80px 20px;
+}
+
+/* HERO IMAGE */
+.hero-img {
+    width: 300px;
+    margin-top: 20px;
+    border-radius: 10px;
 }
 
 /* BUTTONS */
@@ -57,13 +63,11 @@ form {
     color: black;
 }
 
-/* INPUT FIELDS */
+/* INPUTS */
 input, select {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
 }
 
 /* BUTTON */
@@ -77,13 +81,12 @@ button {
     cursor: pointer;
 }
 
-/* BLOG SECTION */
+/* BLOG */
 .blog {
     text-align: center;
     padding: 40px;
 }
 
-/* BLOG CARDS */
 .card {
     background: rgba(255, 255, 255, 0.9);
     margin: 20px auto;
@@ -97,12 +100,9 @@ button {
 footer {
     text-align: center;
     padding: 10px;
-    color: white;
 }
 
-/* ========================= */
-/* MESSAGE POPUP BOX */
-/* ========================= */
+/* MESSAGE BOX */
 .message-box {
     position: fixed;
     top: 30%;
@@ -111,24 +111,6 @@ footer {
     background: white;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.3);
     text-align: center;
-    z-index: 1000;
     color: black;
-}
-
-/* MESSAGE TEXT */
-.message-box p {
-    font-size: 18px;
-    margin-bottom: 15px;
-}
-
-/* MESSAGE BUTTON */
-.message-box button {
-    padding: 10px 20px;
-    background: #b30000;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 }
