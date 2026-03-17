@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donate Blood</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <header>
-        <h2 class="logo">🩸 Blood Donation Hub</h2>
-    </header>
+<header>
+    <h2>🩸 Blood Donation Hub</h2>
+</header>
 
-    <form id="donateForm">
-        <h2>Donate Blood</h2>
+<!-- IMAGE -->
+<div class="image-section">
+    <img src="https://images.unsplash.com/photo-1588776814546-ec7e6f06b0b3" alt="Donate Blood">
+</div>
 
-        <input type="text" placeholder="Full Name" required>
-        <input type="email" placeholder="Email" required>
+<!-- FORM -->
+<form onsubmit="showMessage(event)">
+    <h2>Donate Blood</h2>
 
-        <select required>
-            <option value="">Select Blood Group</option>
-            <option>A+</option>
-            <option>B+</option>
-            <option>O+</option>
-            <option>AB+</option>
-        </select>
+    <input type="text" placeholder="Full Name" required>
+    <input type="number" placeholder="Age" required>
 
-        <input type="text" placeholder="City" required>
-        <input type="tel" placeholder="Phone Number" required>
+    <select required>
+        <option value="">Select Blood Group</option>
+        <option>A+</option>
+        <option>B+</option>
+        <option>O+</option>
+        <option>AB+</option>
+    </select>
 
-        <button type="submit">Submit</button>
-    </form>
+    <input type="text" placeholder="Location" required>
 
-    <script src="script.js"></script>
+    <button type="submit">Submit</button>
+</form>
+
+<script src="script.js"></script>
+
 </body>
-
 </html>
