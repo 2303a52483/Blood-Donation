@@ -1,40 +1,42 @@
+/* BODY - FULL PAGE BLOOD THEME */
 body {
     margin: 0;
-    font-family: Arial;
-    background: #f4f4f4;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #ff4d4d, #b30000);
+    color: white;
 }
 
 /* HEADER */
 header {
-    background: #333;
+    background: transparent;
     color: white;
     padding: 15px;
     text-align: center;
 }
 
-/* NAV */
+/* NAVIGATION */
 nav a {
     color: white;
     margin: 10px;
     text-decoration: none;
+    font-weight: bold;
 }
 
-/* HERO */
+/* HERO SECTION */
 .hero {
     text-align: center;
-    padding: 80px;
-    background: #e74c3c; /* light red */
-    color: white;
+    padding: 80px 20px;
 }
 
 /* BUTTONS */
 .btn {
     background: white;
-    color: #e74c3c;
+    color: #b30000;
     padding: 10px 20px;
     margin: 10px;
     text-decoration: none;
     border-radius: 5px;
+    font-weight: bold;
 }
 
 .btn-outline {
@@ -42,56 +44,65 @@ nav a {
     color: white;
     padding: 10px 20px;
     text-decoration: none;
+    border-radius: 5px;
 }
 
-/* FORM */
+/* FORMS */
 form {
     width: 300px;
     margin: 40px auto;
     padding: 20px;
-    background: white;
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
+    color: black;
 }
 
-/* INPUT */
+/* INPUT FIELDS */
 input, select {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 /* BUTTON */
 button {
     width: 100%;
     padding: 10px;
-    background: #e74c3c;
+    background: #b30000;
     color: white;
     border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-/* BLOG */
+/* BLOG SECTION */
 .blog {
     text-align: center;
     padding: 40px;
 }
 
+/* BLOG CARDS */
 .card {
-    background: white;
+    background: rgba(255, 255, 255, 0.9);
     margin: 20px auto;
     padding: 20px;
     width: 300px;
     border-radius: 10px;
+    color: black;
 }
 
 /* FOOTER */
 footer {
     text-align: center;
-    background: #333;
-    color: white;
     padding: 10px;
+    color: white;
 }
 
-/* POPUP */
+/* ========================= */
+/* MESSAGE POPUP BOX */
+/* ========================= */
 .message-box {
     position: fixed;
     top: 30%;
@@ -100,11 +111,24 @@ footer {
     background: white;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
     text-align: center;
+    z-index: 1000;
+    color: black;
 }
 
+/* MESSAGE TEXT */
+.message-box p {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+/* MESSAGE BUTTON */
 .message-box button {
-    background: #e74c3c;
+    padding: 10px 20px;
+    background: #b30000;
     color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
