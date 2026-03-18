@@ -1,18 +1,50 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-     <title>Success</title>
-     <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Success</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-     <div class="message-box">
-          <h2>✅ Donation Submitted Successfully!</h2>
-          <button onclick="window.location.href='index.html'">Go Back</button>
-     </div>
+<div class="success-page">
+    <h1 id="title"></h1>
+    <p id="message"></p>
+    <button onclick="goHome()">Go Home</button>
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get("type");
+
+    const title = document.getElementById("title");
+    const message = document.getElementById("message");
+
+    if (type === "donate") {
+        title.innerText = "❤️ Thank You for Donating Blood ❤️";
+        message.innerText = "Your contribution can save lives!";
+    } 
+    else if (type === "request") {
+        title.innerText = "🩸 Request Submitted Successfully";
+        message.innerText = "We will connect you with donors soon.";
+    } 
+    else if (type === "login") {
+        title.innerText = "✅ Login Successful";
+        message.innerText = "Welcome back!";
+    } 
+    else if (type === "signup") {
+        title.innerText = "🎉 Signup Successful";
+        message.innerText = "Your account has been created.";
+    } 
+    else {
+        title.innerText = "✅ Success!";
+        message.innerText = "Operation completed successfully.";
+    }
+
+    function goHome() {
+        window.location.href = "index.html";
+    }
+</script>
 
 </body>
-
 </html>
