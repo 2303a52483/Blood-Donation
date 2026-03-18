@@ -1,77 +1,158 @@
-body {
-    margin: 0;
-    font-family: Arial;
-    background: linear-gradient(to right, #ff4d4d, #b30000);
-    color: white;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: linear-gradient(to right, #ff4d4d, #b30000);
+            color: white;
+        }
 
-header {
-    text-align: center;
-    padding: 15px;
-}
+        header {
+            text-align: center;
+            padding: 15px;
+        }
 
-nav a {
-    color: white;
-    margin: 10px;
-}
+        nav a {
+            color: white;
+            margin: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-.hero {
-    text-align: center;
-    padding: 80px;
-}
+        .hero {
+            text-align: center;
+            padding: 80px;
+        }
 
-.hero-img {
-    width: 300px;
-    border-radius: 10px;
-}
+        /* Hero Image Rectangle */
+        .hero-img {
+            width: 300px;
+            height: 180px;       /* rectangle height */
+            border-radius: 10px; /* slight rounding */
+            object-fit: cover;   /* fills rectangle nicely */
+        }
 
-.btn {
-    background: white;
-    color: red;
-    padding: 10px;
-}
+        .btn {
+            background: white;
+            color: red;
+            padding: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+        }
 
-.btn-outline {
-    border: 2px solid white;
-    padding: 10px;
-}
+        .btn-outline {
+            border: 2px solid white;
+            padding: 10px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+        }
 
-form {
-    width: 300px;
-    margin: auto;
-    background: white;
-    color: black;
-    padding: 20px;
-    border-radius: 10px;
-}
+        form {
+            width: 300px;
+            margin: auto;
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+        }
 
-.image-section img {
-    width: 300px;
-    display: block;
-    margin: auto;
-}
+        /* Image Section Rectangle */
+        .image-section img {
+            width: 300px;
+            height: 180px;       /* rectangle height */
+            border-radius: 10px;
+            object-fit: cover;
+            display: block;
+            margin: auto;
+        }
 
-.card {
-    background: white;
-    color: black;
-    width: 300px;
-    margin: 20px auto;
-    padding: 20px;
-}
+        /* Card Rectangle Images */
+        .card {
+            background: white;
+            color: black;
+            width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+        }
 
-.card img {
-    width: 100%;
-}
+        .card img {
+            width: 100%;
+            height: 180px;       /* rectangle height */
+            border-radius: 10px;
+            object-fit: cover;
+        }
 
-.video-container {
-    text-align: center;
-}
+        .video-container {
+            text-align: center;
+        }
 
-.blog-video {
-    width: 80%;
-}
+        .blog-video {
+            width: 80%;
+        }
 
-.message-box {
-    text-align: center;
-    margin-top: 100px;
-}
+        .message-box {
+            text-align: center;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header>
+        <h1>Blood Donation Portal</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Donate Blood</a>
+            <a href="#">Requests</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="myphoto.jpeg.jpeg" alt="Hero Image" class="hero-img">
+        <h2>Save Lives Through Blood Donation</h2>
+        <p>Join our community of volunteers and donors to make a difference</p>
+        <div>
+            <a href="#" class="btn">Join Us</a>
+            <a href="#" class="btn-outline">Learn More</a>
+        </div>
+    </section>
+
+    <!-- Image Section -->
+    <section class="image-section">
+        <img src="myphoto.jpeg.jpeg" alt="Volunteer Image">
+    </section>
+
+    <!-- Card Section -->
+    <div class="card">
+        <img src="myphoto.jpeg.jpeg" alt="Blood Request">
+        <h3>Navya Revuri</h3>
+        <p>Request: Blood</p>
+        <p>Email: navya@example.com</p>
+        <p>Blood Group: B+</p>
+        <p>Location: Hanamkonda</p>
+        <p>Details: Urgent blood required for surgery</p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2026 Blood Donation Volunteers
+    </footer>
+
+</body>
+</html>
