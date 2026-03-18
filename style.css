@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blood Theme Profile</title>
+    <title>Blood Donation Portal</title>
     <style>
-        /* Full Page Blood Theme */
+        /* Blood Donation Theme */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -69,29 +69,37 @@
             background: #ffe6e6;
         }
 
-        /* ✅ Profile Section */
+        /* Profile / Request Section */
         .profile-section {
             text-align: center;
-            padding: 30px;
+            padding: 40px 20px;
+        }
+
+        .profile {
+            background: rgba(255, 255, 255, 0.1); /* subtle overlay for readability */
+            padding: 20px;
+            border-radius: 15px;
+            display: inline-block;
+            max-width: 400px;
         }
 
         .profile img {
-            width: 250px;         /* rectangle width */
-            height: 180px;        /* rectangle height */
-            border-radius: 10px;  /* slight rounded corners */
+            width: 250px;        /* rectangle width */
+            height: 180px;       /* rectangle height */
+            border-radius: 10px; /* slight rounded corners */
             border: 5px solid white;
-            object-fit: cover;    /* fills rectangle nicely */
+            object-fit: cover;
             display: block;
-            margin: 0 auto 20px;  /* center image with space below */
+            margin: 0 auto 20px;
         }
 
-        .profile h2, .profile p, .profile .request-details {
-            margin: 10px 0;       /* stack all content vertically */
+        .profile h2 {
+            margin: 10px 0;
         }
 
-        .profile .request-details {
-            font-size: 1rem;
-            line-height: 1.5;
+        .profile p {
+            margin: 8px 0;
+            font-size: 1.1rem;
         }
 
         /* Footer */
@@ -108,6 +116,9 @@
                 width: 90%;
                 height: auto;
             }
+            .profile {
+                max-width: 90%;
+            }
         }
     </style>
 </head>
@@ -115,41 +126,41 @@
 
     <!-- Navbar -->
     <header>
-        <h1>My Volunteer Page</h1>
+        <h1>Blood Donation Portal</h1>
         <nav>
             <a href="#">Home</a>
-            <a href="#">About</a>
+            <a href="#">Donate Blood</a>
+            <a href="#">Requests</a>
             <a href="#">Contact</a>
         </nav>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
-        <h2>Welcome to Our Team</h2>
-        <p>Dedicated volunteers working together for a cause</p>
+        <h2>Save Lives Through Blood Donation</h2>
+        <p>Join our community of volunteers and donors to make a difference</p>
         <div class="buttons">
             <a href="#">Join Us</a>
             <a href="#">Learn More</a>
         </div>
     </section>
 
-    <!-- Profile Section -->
+    <!-- Profile / Blood Request Section -->
     <section class="profile-section">
         <div class="profile">
-            <img src="myphoto.jpeg.jpeg" alt="My Photo">
-            <h2>Navya</h2>
-            <p>Team Lead</p>
-            <div class="request-details">
-                <p>Request: Organize Blood Donation Camp</p>
-                <p>Details: Volunteers will manage registrations, provide refreshments, and assist donors</p>
-                <p>Other Info: Ensure safety and proper social distancing during the camp</p>
-            </div>
+            <img src="myphoto.jpeg.jpeg" alt="Profile Photo">
+            <h2>Navya Revuri</h2>
+            <p>Request: Blood</p>
+            <p>Email: navya@example.com</p>
+            <p>Blood Group: B+</p>
+            <p>Location: Hanamkonda</p>
+            <p>Request Details: Need blood for urgent surgery</p>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        &copy; 2026 My Volunteer Team
+        &copy; 2026 Blood Donation Volunteers
     </footer>
 
 </body>
