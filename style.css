@@ -1,167 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blood Donation Portal</title>
-    <style>
-        /* Blood Donation Theme */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #8b0000, #ff4d4d);
-            color: white;
-        }
+body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(to right, #ff4d4d, #b30000);
+    color: white;
+}
 
-        /* Navbar */
-        header {
-            background: #600000;
-            padding: 15px;
-            text-align: center;
-        }
+header {
+    text-align: center;
+    padding: 15px;
+}
 
-        header h1 {
-            margin: 0;
-        }
+nav a {
+    color: white;
+    margin: 10px;
+}
 
-        nav {
-            margin-top: 10px;
-        }
+.hero {
+    text-align: center;
+    padding: 80px;
+}
 
-        nav a {
-            color: white;
-            margin: 0 10px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+.hero-img {
+    width: 300px;
+    border-radius: 10px;
+}
 
-        nav a:hover {
-            text-decoration: underline;
-        }
+.btn {
+    background: white;
+    color: red;
+    padding: 10px;
+}
 
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 50px 20px;
-        }
+.btn-outline {
+    border: 2px solid white;
+    padding: 10px;
+}
 
-        .hero h2 {
-            font-size: 2.5rem;
-        }
+form {
+    width: 300px;
+    margin: auto;
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+}
 
-        .hero p {
-            font-size: 1.2rem;
-        }
+.image-section img {
+    width: 300px;
+    display: block;
+    margin: auto;
+}
 
-        /* Buttons */
-        .buttons a {
-            display: inline-block;
-            margin: 10px;
-            padding: 10px 20px;
-            background: white;
-            color: red;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-        }
+.card {
+    background: white;
+    color: black;
+    width: 300px;
+    margin: 20px auto;
+    padding: 20px;
+}
 
-        .buttons a:hover {
-            background: #ffe6e6;
-        }
+.card img {
+    width: 100%;
+}
 
-        /* Profile / Request Section */
-        .profile-section {
-            text-align: center;
-            padding: 40px 20px;
-        }
+.video-container {
+    text-align: center;
+}
 
-        .profile {
-            background: rgba(255, 255, 255, 0.1); /* subtle overlay for readability */
-            padding: 20px;
-            border-radius: 15px;
-            display: inline-block;
-            max-width: 400px;
-        }
+.blog-video {
+    width: 80%;
+}
 
-        .profile img {
-            width: 250px;        /* rectangle width */
-            height: 180px;       /* rectangle height */
-            border-radius: 10px; /* slight rounded corners */
-            border: 5px solid white;
-            object-fit: cover;
-            display: block;
-            margin: 0 auto 20px;
-        }
-
-        .profile h2 {
-            margin: 10px 0;
-        }
-
-        .profile p {
-            margin: 8px 0;
-            font-size: 1.1rem;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 15px;
-            background: #600000;
-            margin-top: 30px;
-        }
-
-        /* Responsive */
-        @media(max-width: 768px){
-            .profile img{
-                width: 90%;
-                height: auto;
-            }
-            .profile {
-                max-width: 90%;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Navbar -->
-    <header>
-        <h1>Blood Donation Portal</h1>
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">Donate Blood</a>
-            <a href="#">Requests</a>
-            <a href="#">Contact</a>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <h2>Save Lives Through Blood Donation</h2>
-        <p>Join our community of volunteers and donors to make a difference</p>
-        <div class="buttons">
-            <a href="#">Join Us</a>
-            <a href="#">Learn More</a>
-        </div>
-    </section>
-
-    <!-- Profile / Blood Request Section -->
-    <section class="profile-section">
-        <div class="profile">
-            <img src="myphoto.jpeg.jpeg" alt="Profile Photo">
-            <h2>Navya Revuri</h2>
-            <p>Request: Blood</p>
-            <p>Email: navya@example.com</p>
-            <p>Blood Group: B+</p>
-            <p>Location: Hanamkonda</p>
-            <p>Request Details: Need blood for urgent surgery</p>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        &copy; 2026 Blood Donation Volunteers
-    </footer>
-
-</body>
-</html>
+.message-box {
+    text-align: center;
+    margin-top: 100px;
+}
