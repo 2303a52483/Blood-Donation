@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Donate Blood</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -10,25 +11,32 @@
     <h2>🩸 Blood Donation Hub</h2>
 </header>
 
+<!-- IMAGE -->
 <div class="image-section">
-    <img src="https://images.unsplash.com/photo-1588776814546-ec7e6f06b0b3">
+    <img src="https://images.unsplash.com/photo-1588776814546-ec7e6f06b0b3" alt="Donate Blood">
 </div>
 
-<form onsubmit="showMessage(event)">
+<!-- FORM -->
+<form id="donateForm">
     <h2>Donate Blood</h2>
+
     <input type="text" placeholder="Full Name" required>
     <input type="number" placeholder="Age" required>
 
     <select required>
-        <option>Select Blood Group</option>
-        <option>A+</option><option>B+</option>
-        <option>O+</option><option>AB+</option>
+        <option value="">Select Blood Group</option>
+        <option>A+</option>
+        <option>B+</option>
+        <option>O+</option>
+        <option>AB+</option>
     </select>
 
     <input type="text" placeholder="Location" required>
+
     <button type="submit">Submit</button>
 </form>
 
+<!-- JS -->
 <script src="script.js"></script>
 
 </body>
