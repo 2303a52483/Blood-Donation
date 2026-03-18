@@ -1,13 +1,15 @@
 
-// Wait until page loads
+// Wait for page load
 document.addEventListener("DOMContentLoaded", function () {
 
     // Donate Form
     const donateForm = document.getElementById("donateForm");
+
     if (donateForm) {
         donateForm.addEventListener("submit", function (e) {
             e.preventDefault();
 
+            // Show full page success message
             document.body.innerHTML = `
                 <div class="success-page">
                     <h1>❤️ Thank You for Donating Blood ❤️</h1>
@@ -17,6 +19,13 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
         });
     }
+
+});
+
+// Go back to home
+function goHome() {
+    window.location.href = "index.html";
+}
 
     // Request Form
     const requestForm = document.getElementById("requestForm");
