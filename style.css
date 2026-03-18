@@ -78,17 +78,20 @@
         .profile img {
             width: 250px;         /* rectangle width */
             height: 180px;        /* rectangle height */
-            border-radius: 10px;  /* slight rounding instead of circle */
+            border-radius: 10px;  /* slight rounded corners */
             border: 5px solid white;
             object-fit: cover;    /* fills rectangle nicely */
+            display: block;
+            margin: 0 auto 20px;  /* center image with space below */
         }
 
-        .profile h2 {
-            margin-top: 10px;
+        .profile h2, .profile p, .profile .request-details {
+            margin: 10px 0;       /* stack all content vertically */
         }
 
-        .profile p {
+        .profile .request-details {
             font-size: 1rem;
+            line-height: 1.5;
         }
 
         /* Footer */
@@ -136,6 +139,11 @@
             <img src="myphoto.jpeg.jpeg" alt="My Photo">
             <h2>Navya</h2>
             <p>Team Lead</p>
+            <div class="request-details">
+                <p>Request: Organize Blood Donation Camp</p>
+                <p>Details: Volunteers will manage registrations, provide refreshments, and assist donors</p>
+                <p>Other Info: Ensure safety and proper social distancing during the camp</p>
+            </div>
         </div>
     </section>
 
