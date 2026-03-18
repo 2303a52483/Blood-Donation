@@ -1,93 +1,148 @@
-/* Full Page Blood Theme */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #8b0000, #ff4d4d);
-    color: white;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Theme Profile</title>
+    <style>
+        /* Full Page Blood Theme */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #8b0000, #ff4d4d);
+            color: white;
+        }
 
-/* Navbar */
-header {
-    background: #600000;
-    padding: 15px;
-    text-align: center;
-}
+        /* Navbar */
+        header {
+            background: #600000;
+            padding: 15px;
+            text-align: center;
+        }
 
-header h1 {
-    margin: 0;
-}
+        header h1 {
+            margin: 0;
+        }
 
-nav {
-    margin-top: 10px;
-}
+        nav {
+            margin-top: 10px;
+        }
 
-nav a {
-    color: white;
-    margin: 0 10px;
-    text-decoration: none;
-    font-weight: bold;
-}
+        nav a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-nav a:hover {
-    text-decoration: underline;
-}
+        nav a:hover {
+            text-decoration: underline;
+        }
 
-/* Hero Section */
-.hero {
-    text-align: center;
-    padding: 50px 20px;
-}
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 50px 20px;
+        }
 
-.hero h2 {
-    font-size: 2.5rem;
-}
+        .hero h2 {
+            font-size: 2.5rem;
+        }
 
-.hero p {
-    font-size: 1.2rem;
-}
+        .hero p {
+            font-size: 1.2rem;
+        }
 
-/* Buttons */
-.buttons a {
-    display: inline-block;
-    margin: 10px;
-    padding: 10px 20px;
-    background: white;
-    color: red;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-}
+        /* Buttons */
+        .buttons a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background: white;
+            color: red;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
 
-.buttons a:hover {
-    background: #ffe6e6;
-}
+        .buttons a:hover {
+            background: #ffe6e6;
+        }
 
-/* ✅ Profile Section */
-.profile-section {
-    text-align: center;
-    padding: 30px;
-}
+        /* ✅ Profile Section */
+        .profile-section {
+            text-align: center;
+            padding: 30px;
+        }
 
-.profile img {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    border: 5px solid white;
-    object-fit: cover;
-}
+        .profile img {
+            width: 250px;         /* rectangle width */
+            height: 180px;        /* rectangle height */
+            border-radius: 10px;  /* slight rounding instead of circle */
+            border: 5px solid white;
+            object-fit: cover;    /* fills rectangle nicely */
+        }
 
-.profile h2 {
-    margin-top: 10px;
-}
+        .profile h2 {
+            margin-top: 10px;
+        }
 
-.profile p {
-    font-size: 1rem;
-}
+        .profile p {
+            font-size: 1rem;
+        }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 15px;
-    background: #600000;
-    margin-top: 30px;
-}
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #600000;
+            margin-top: 30px;
+        }
+
+        /* Responsive */
+        @media(max-width: 768px){
+            .profile img{
+                width: 90%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <h1>My Volunteer Page</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>Welcome to Our Team</h2>
+        <p>Dedicated volunteers working together for a cause</p>
+        <div class="buttons">
+            <a href="#">Join Us</a>
+            <a href="#">Learn More</a>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <div class="profile">
+            <img src="myphoto.jpeg.jpeg" alt="My Photo">
+            <h2>Navya</h2>
+            <p>Team Lead</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2026 My Volunteer Team
+    </footer>
+
+</body>
+</html>
