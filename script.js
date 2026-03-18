@@ -1,45 +1,22 @@
 
-// Wait for page load
+// Wait for page to load
 document.addEventListener("DOMContentLoaded", function () {
 
     // Donate Form
     const donateForm = document.getElementById("donateForm");
-
     if (donateForm) {
         donateForm.addEventListener("submit", function (e) {
             e.preventDefault();
-
-            // Show full page success message
-            document.body.innerHTML = `
-                <div class="success-page">
-                    <h1>❤️ Thank You for Donating Blood ❤️</h1>
-                    <p>Your contribution can save lives!</p>
-                    <button onclick="goHome()">Go Home</button>
-                </div>
-            `;
+            window.location.href = "success.html?type=donate";
         });
     }
 
-});
-
-// Go back to home
-function goHome() {
-    window.location.href = "index.html";
-}
-
-    // Request Form
+    // Request Blood Form
     const requestForm = document.getElementById("requestForm");
     if (requestForm) {
         requestForm.addEventListener("submit", function (e) {
             e.preventDefault();
-
-            document.body.innerHTML = `
-                <div class="success-page">
-                    <h1>🩸 Request Submitted Successfully</h1>
-                    <p>We will connect you with donors soon.</p>
-                    <button onclick="goHome()">Go Home</button>
-                </div>
-            `;
+            window.location.href = "success.html?type=request";
         });
     }
 
@@ -48,14 +25,7 @@ function goHome() {
     if (loginForm) {
         loginForm.addEventListener("submit", function (e) {
             e.preventDefault();
-
-            document.body.innerHTML = `
-                <div class="success-page">
-                    <h1>✅ Login Successful</h1>
-                    <p>Welcome back!</p>
-                    <button onclick="goHome()">Go Home</button>
-                </div>
-            `;
+            window.location.href = "success.html?type=login";
         });
     }
 
@@ -64,20 +34,8 @@ function goHome() {
     if (signupForm) {
         signupForm.addEventListener("submit", function (e) {
             e.preventDefault();
-
-            document.body.innerHTML = `
-                <div class="success-page">
-                    <h1>🎉 Signup Successful</h1>
-                    <p>Your account has been created.</p>
-                    <button onclick="goHome()">Go Home</button>
-                </div>
-            `;
+            window.location.href = "success.html?type=signup";
         });
     }
 
 });
-
-// Go Home button
-function goHome() {
-    window.location.href = "index.html";
-}
