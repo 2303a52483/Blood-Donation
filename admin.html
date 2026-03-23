@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        h2 { color: red; }
+        .box { border: 1px solid #ccc; padding: 10px; margin: 10px; }
+    </style>
+</head>
+<body>
+
+<h1>🩸 Blood Donation Admin Dashboard</h1>
+
+<div class="box">
+    <h2>👤 Total Signed Up Users</h2>
+    <p id="signupCount"></p>
+</div>
+
+<div class="box">
+    <h2>🔑 Logged In Users</h2>
+    <p id="loginCount"></p>
+</div>
+
+<div class="box">
+    <h2>❤️ Donors List</h2>
+    <div id="donorList"></div>
+</div>
+
+<div class="box">
+    <h2>🆘 Blood Requests</h2>
+    <div id="requestList"></div>
+</div>
+
+<script>
+
+// SIGNUP COUNT
+let users = JSON.parse(localStorage.getItem("users")) || [];
+document.getElementById("signupCount").innerText = users.length;
+
+// LOGIN COUNT
+let logins = JSON.parse(localStorage.getItem("logins")) || [];
+document.getElementById("loginCount").innerText = logins.length;
+
+// DONORS
+let donors = JSON.parse(localStorage.getItem("donors")) || [];
+let donorHTML = "";
+donors.forEach(d => {
+    donorHTML += `<p>${d.name} - ${d.blood}</p>`;
+});
+document.getElementById("donorList").innerHTML = donorHTML;
+
+// REQUESTS
+let requests = JSON.parse(localStorage.getItem("requests")) || [];
+let requestHTML = "";
+requests.forEach(r => {
+    requestHTML += `<p>${r.name} needs ${r.blood}</p>`;
+});
+document.getElementById("requestList").innerHTML = requestHTML;
+
+</script>
+
+</body>
+</html>
