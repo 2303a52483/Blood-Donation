@@ -45,23 +45,28 @@
         </div>
 
         <div class="right">
-            <!-- ✅ FIXED IMAGE PATH -->
-            <img src="myphoto.jpeg .jpeg" width="150">
+            <!-- ✅ FIXED IMAGE -->
+            <img src="myphoto.jpeg" width="150">
         </div>
 
     </div>
 </section>
 
 <!-- 🤖 CHATBOT -->
-<div style="position:fixed; bottom:20px; right:20px; width:250px; background:white; border-radius:10px; padding:10px; box-shadow:0 0 10px rgba(0,0,0,0.3);">
+<div style="position:fixed; bottom:20px; right:20px; width:260px; background:white; border-radius:10px; padding:12px; box-shadow:0 0 15px rgba(0,0,0,0.3); z-index:999;">
 
-    <h4>🤖 Ask Me</h4>
+    <h4 style="color:black;">🤖 Ask Me</h4>
 
-    <input type="text" id="userInput" placeholder="Ask something..." style="width:100%; padding:5px;">
+    <input type="text" id="userInput" placeholder="Ask something..." 
+           style="width:100%; padding:6px; margin-top:5px;">
     
-    <button onclick="chatbot()" style="width:100%; margin-top:5px;">Send</button>
+    <button onclick="chatbot()" 
+            style="width:100%; margin-top:8px; padding:6px; background:#ff4b5c; color:white; border:none;">
+        Send
+    </button>
 
-    <p id="response" style="margin-top:10px; font-size:14px;"></p>
+    <!-- ✅ IMPORTANT: visible text -->
+    <p id="response" style="margin-top:10px; color:black; font-size:14px; font-weight:bold;"></p>
 
 </div>
 
@@ -70,8 +75,28 @@
     <p>© 2026 Blood Donation Hub</p>
 </footer>
 
-<!-- ✅ LINK JS -->
-<script src="script.js"></script>
+<!-- 🔥 TEMP INLINE JS (FOR TESTING) -->
+<script>
+function chatbot() {
+    let input = document.getElementById("userInput").value.toLowerCase();
+    let output = document.getElementById("response");
+
+    let reply = "";
+
+    if (input.includes("o+")) {
+        reply = "O+ can receive from O+ and O-";
+    } else if (input.includes("eligible")) {
+        reply = "Age 18-65, weight > 50kg";
+    } else {
+        reply = "Try typing O+ or eligible";
+    }
+
+    output.innerText = reply;
+}
+</script>
+
+<!-- ❌ COMMENT THIS TEMPORARILY -->
+<!-- <script src="script.js"></script> -->
 
 </body>
 </html>
