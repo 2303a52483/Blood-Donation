@@ -1,4 +1,6 @@
-// Wait for page to load
+// ============================
+// 🚀 WAIT FOR PAGE LOAD
+// ============================
 document.addEventListener("DOMContentLoaded", function () {
 
     // Donate Form
@@ -38,13 +40,30 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
-// 🤖 CHATBOT FUNCTION
+
+
+// ============================
+// 🤖 CHATBOT FUNCTION (FIXED)
+// ============================
 function chatbot() {
-    let input = document.getElementById("userInput").value.toLowerCase();
+
+    let inputBox = document.getElementById("userInput");
+    let outputBox = document.getElementById("response");
+
+    // 🔥 Safety check
+    if (!inputBox || !outputBox) {
+        alert("❌ Chatbot not connected properly");
+        return;
+    }
+
+    let input = inputBox.value.toLowerCase().trim();
     let reply = "";
 
-    if (input.includes("donate to me")) {
-        reply = "Tell me your blood group (A+, B+, O+, etc)";
+    if (input === "") {
+        reply = "⚠ Please type something";
+    }
+    else if (input.includes("donate")) {
+        reply = "You can donate blood every 3 months";
     }
     else if (input.includes("o+")) {
         reply = "O+ can receive from O+ and O-";
@@ -59,36 +78,37 @@ function chatbot() {
         reply = "AB+ can receive from all blood groups";
     }
     else if (input.includes("o-")) {
-        reply = "O- is universal donor (can donate to all)";
-    }
-    else if (input.includes("when donate again")) {
-        reply = "You can donate blood every 3 months";
+        reply = "O- is universal donor";
     }
     else if (input.includes("eligible")) {
         reply = "Age 18-65, weight above 50kg, healthy person can donate";
     }
     else {
-        reply = "Ask about blood donation, eligibility, or compatibility 😊";
+        reply = "Try typing blood group (O+, A+, etc) or 'eligible'";
     }
 
-    document.getElementById("response").innerText = reply;
+    outputBox.innerText = reply;
+
+    // 🔥 clear input after send
+    inputBox.value = "";
 }
 
-/* ============================
-   🚨 EMERGENCY CIRCLE FEATURE
-   ============================ */
 
-// 🔥 Get members
+// ============================
+// 🚨 EMERGENCY CIRCLE FEATURE
+// ============================
+
+// Get members
 function getMembers() {
     return JSON.parse(localStorage.getItem("circle")) || [];
 }
 
-// 🔥 Save members
+// Save members
 function saveMembers(data) {
     localStorage.setItem("circle", JSON.stringify(data));
 }
 
-// ✅ Add Member
+// Add Member
 function addMember() {
     let name = document.getElementById("name").value;
     let blood = document.getElementById("blood").value;
@@ -105,12 +125,11 @@ function addMember() {
 
     alert("✅ Member added to circle");
 
-    // Clear inputs
     document.getElementById("name").value = "";
     document.getElementById("blood").value = "";
 }
 
-// 🚨 Send Alert
+// Send Alert
 function sendAlert() {
     let needBlood = document.getElementById("needBlood").value;
 
