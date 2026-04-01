@@ -33,11 +33,10 @@
     </div>
 </section>
 
-<!-- 🔥 New Professional Layout -->
+<!-- Profile Section -->
 <section class="profile-section">
     <div class="container">
 
-        <!-- Left Side -->
         <div class="left">
             <h2>Volunteers ❤️</h2>
             <p>Arjun</p>
@@ -45,18 +44,34 @@
             <p>Navya</p>
         </div>
 
-        <!-- Right Side -->
         <div class="right">
-            <img src="myphoto.jpeg .jpeg">
+            <!-- ✅ FIXED IMAGE PATH -->
+            <img src="myphoto.jpeg" width="150">
         </div>
 
     </div>
 </section>
 
+<!-- 🤖 CHATBOT -->
+<div style="position:fixed; bottom:20px; right:20px; width:250px; background:white; border-radius:10px; padding:10px; box-shadow:0 0 10px rgba(0,0,0,0.3);">
+
+    <h4>🤖 Ask Me</h4>
+
+    <input type="text" id="userInput" placeholder="Ask something..." style="width:100%; padding:5px;">
+    
+    <button onclick="chatbot()" style="width:100%; margin-top:5px;">Send</button>
+
+    <p id="response" style="margin-top:10px; font-size:14px;"></p>
+
+</div>
+
 <!-- Footer -->
 <footer>
     <p>© 2026 Blood Donation Hub</p>
 </footer>
+
+<!-- ✅ LINK JS -->
+<script src="script.js"></script>
 
 </body>
 </html>
