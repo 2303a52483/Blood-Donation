@@ -77,22 +77,29 @@
 
 <!-- 🔥 TEMP INLINE JS (FOR TESTING) -->
 <script>
-function chatbot() {
-    let input = document.getElementById("userInput").value.toLowerCase();
-    let output = document.getElementById("response");
+document.addEventListener("DOMContentLoaded", function () {
 
-    let reply = "";
+    const btn = document.getElementById("sendBtn");
+    const input = document.getElementById("userInput");
+    const output = document.getElementById("response");
 
-    if (input.includes("o+")) {
-        reply = "O+ can receive from O+ and O-";
-    } else if (input.includes("eligible")) {
-        reply = "Age 18-65, weight > 50kg";
-    } else {
-        reply = "Try typing O+ or eligible";
-    }
+    btn.addEventListener("click", function () {
 
-    output.innerText = reply;
-}
+        let text = input.value.toLowerCase();
+        let reply = "";
+
+        if (text.includes("o+")) {
+            reply = "O+ can receive from O+ and O-";
+        } else if (text.includes("eligible")) {
+            reply = "Age 18-65, weight > 50kg";
+        } else {
+            reply = "Try typing O+ or eligible";
+        }
+
+        output.innerText = reply;
+    });
+
+});
 </script>
 
 <!-- ❌ COMMENT THIS TEMPORARILY -->
