@@ -38,7 +38,41 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+// 🤖 CHATBOT FUNCTION
+function chatbot() {
+    let input = document.getElementById("userInput").value.toLowerCase();
+    let reply = "";
 
+    if (input.includes("donate to me")) {
+        reply = "Tell me your blood group (A+, B+, O+, etc)";
+    }
+    else if (input.includes("o+")) {
+        reply = "O+ can receive from O+ and O-";
+    }
+    else if (input.includes("a+")) {
+        reply = "A+ can receive from A+, A-, O+, O-";
+    }
+    else if (input.includes("b+")) {
+        reply = "B+ can receive from B+, B-, O+, O-";
+    }
+    else if (input.includes("ab+")) {
+        reply = "AB+ can receive from all blood groups";
+    }
+    else if (input.includes("o-")) {
+        reply = "O- is universal donor (can donate to all)";
+    }
+    else if (input.includes("when donate again")) {
+        reply = "You can donate blood every 3 months";
+    }
+    else if (input.includes("eligible")) {
+        reply = "Age 18-65, weight above 50kg, healthy person can donate";
+    }
+    else {
+        reply = "Ask about blood donation, eligibility, or compatibility 😊";
+    }
+
+    document.getElementById("response").innerText = reply;
+}
 
 /* ============================
    🚨 EMERGENCY CIRCLE FEATURE
