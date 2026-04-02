@@ -45,8 +45,7 @@
         </div>
 
         <div class="right">
-            <!-- ✅ FIXED IMAGE -->
-            <img src="myphoto.jpeg" width="150">
+            <img src="myphoto.jpeg .jpeg" width="150">
         </div>
 
     </div>
@@ -65,7 +64,6 @@
         Send
     </button>
 
-    <!-- ✅ IMPORTANT: visible text -->
     <p id="response" style="margin-top:10px; color:black; font-size:14px; font-weight:bold;"></p>
 
 </div>
@@ -75,35 +73,45 @@
     <p>© 2026 Blood Donation Hub</p>
 </footer>
 
-<!-- 🔥 TEMP INLINE JS (FOR TESTING) -->
+<!-- ✅ WORKING CHATBOT SCRIPT -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+function chatbot() {
 
-    const btn = document.getElementById("sendBtn");
-    const input = document.getElementById("userInput");
-    const output = document.getElementById("response");
+    let input = document.getElementById("userInput").value.toLowerCase();
+    let output = document.getElementById("response");
 
-    btn.addEventListener("click", function () {
+    if (input === "") {
+        output.innerText = "⚠ Please type something";
+        return;
+    }
 
-        let text = input.value.toLowerCase();
-        let reply = "";
+    let reply = "";
 
-        if (text.includes("o+")) {
-            reply = "O+ can receive from O+ and O-";
-        } else if (text.includes("eligible")) {
-            reply = "Age 18-65, weight > 50kg";
-        } else {
-            reply = "Try typing O+ or eligible";
-        }
+    if (input.includes("o+")) {
+        reply = "O+ can receive from O+ and O-";
+    } 
+    else if (input.includes("a+")) {
+        reply = "A+ can receive from A+, A-, O+, O-";
+    } 
+    else if (input.includes("b+")) {
+        reply = "B+ can receive from B+, B-, O+, O-";
+    } 
+    else if (input.includes("ab+")) {
+        reply = "AB+ can receive from all blood groups";
+    } 
+    else if (input.includes("eligible")) {
+        reply = "Age 18-65, weight above 50kg";
+    } 
+    else if (input.includes("hi") || input.includes("hello")) {
+        reply = "Hello broh 😊 Ask me about blood donation!";
+    } 
+    else {
+        reply = "❓ Try typing: O+, A+, eligible";
+    }
 
-        output.innerText = reply;
-    });
-
-});
+    output.innerText = reply;
+}
 </script>
-
-<!-- ❌ COMMENT THIS TEMPORARILY -->
-<!-- <script src="script.js"></script> -->
 
 </body>
 </html>
