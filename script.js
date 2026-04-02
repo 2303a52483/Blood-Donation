@@ -110,35 +110,26 @@ function sendAlert() {
 // 🤖 CHATBOT FUNCTIONS (Typed Blood Group)
 // ============================
 
+// ============================
+// 🤖 CHATBOT FUNCTIONS
+// ============================
 function reply(type) {
-    const bloodGroup = document.getElementById("bloodInput").value.trim().toUpperCase();
+    const inputField = document.getElementById("bloodInput");
+    const bloodGroup = inputField.value.trim().toUpperCase(); // convert input to uppercase
     const responseBox = document.getElementById("responseBox");
 
+    // 1️⃣ Validate input
+    const validGroups = ["O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"];
     if (!bloodGroup) {
         responseBox.innerText = "⚠ Please enter your blood group!";
         return;
     }
-
-    // Valid blood groups
-    const validGroups = ["O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"];
     if (!validGroups.includes(bloodGroup)) {
         responseBox.innerText = "⚠ Invalid blood group! Use O-, O+, A-, A+, B-, B+, AB-, AB+.";
         return;
     }
 
-    // Who can donate TO this group
-    const canReceive = {
-        "O-": ["O-"],
-        "O+": ["O+", "O-"],
-        "A-": ["A-", "O-"],
-        "A+": ["A+", "A-", "O+", "O-"],
-        "B-": ["B-", "O-"],
-        "B+": ["B+", "B-", "O+", "O-"],
-        "AB-": ["AB-", "A-", "B-", "O-"],
-        "AB+": ["AB+", "AB-", "A+", "A-", "B+", "B-", "O+", "O-"]
-    };
-
-    // Who this group can donate TO
+    // 2️⃣ Blood group compatibility
     const canDonate = {
         "O-": ["O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"],
         "O+": ["O+", "A+", "B+", "AB+"],
@@ -150,15 +141,27 @@ function reply(type) {
         "AB+": ["AB+"]
     };
 
-    let response = "";
+    const canReceive = {
+        "O-": ["O-"],
+        "O+": ["O+", "O-"],
+        "A-": ["A-", "O-"],
+        "A+": ["A+", "A-", "O+", "O-"],
+        "B-": ["B-", "O-"],
+        "B+": ["B+", "B-", "O+", "O-"],
+        "AB-": ["AB-", "A-", "B-", "O-"],
+        "AB+": ["AB+", "AB-", "A+", "A-", "B+", "B-", "O+", "O-"]
+    };
 
+    // 3️⃣ Generate response
+    let response = "";
     if (type === "donate") {
-        response = `You can donate to: ${canDonate[bloodGroup].join(", ")}`;
+        response = `✅ You can donate to: ${canDonate[bloodGroup].join(", ")}`;
     } else if (type === "receive") {
-        response = `You can receive from: ${canReceive[bloodGroup].join(", ")}`;
+        response = `✅ You can receive from: ${canReceive[bloodGroup].join(", ")}`;
     } else if (type === "time") {
-        response = "You can donate blood every 3 months.";
+        response = "⏰ You can donate blood every 3 months.";
     }
 
+    // 4️⃣ Display response
     responseBox.innerText = response;
 }
