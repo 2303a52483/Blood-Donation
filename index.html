@@ -74,44 +74,35 @@
 </footer>
 
 <!-- ✅ WORKING CHATBOT SCRIPT -->
-<script>
-function chatbot() {
+<!-- 🤖 CHAT ICON -->
+<div id="chatIcon" onclick="toggleChat()"
+     style="position:fixed; bottom:20px; right:20px; background:#ff4b5c; 
+     width:60px; height:60px; border-radius:50%; display:flex; 
+     align-items:center; justify-content:center; color:white; 
+     font-size:28px; cursor:pointer;">
+    🤖
+</div>
 
-    let input = document.getElementById("userInput").value.toLowerCase();
-    let output = document.getElementById("response");
+<!-- 💬 CHAT BOX -->
+<div id="chatBox"
+     style="display:none; position:fixed; bottom:90px; right:20px; width:280px; 
+     background:white; border-radius:10px; padding:10px; 
+     box-shadow:0 0 15px rgba(0,0,0,0.3);">
 
-    if (input === "") {
-        output.innerText = "⚠ Please type something";
-        return;
-    }
+    <h4>Ask Me</h4>
 
-    let reply = "";
+    <p>Select an option:</p>
 
-    if (input.includes("o+")) {
-        reply = "O+ can receive from O+ and O-";
-    } 
-    else if (input.includes("a+")) {
-        reply = "A+ can receive from A+, A-, O+, O-";
-    } 
-    else if (input.includes("b+")) {
-        reply = "B+ can receive from B+, B-, O+, O-";
-    } 
-    else if (input.includes("ab+")) {
-        reply = "AB+ can receive from all blood groups";
-    } 
-    else if (input.includes("eligible")) {
-        reply = "Age 18-65, weight above 50kg";
-    } 
-    else if (input.includes("hi") || input.includes("hello")) {
-        reply = "Hello broh 😊 Ask me about blood donation!";
-    } 
-    else {
-        reply = "❓ Try typing: O+, A+, eligible";
-    }
+    <button onclick="reply('o+')">O+ Info</button><br><br>
+    <button onclick="reply('a+')">A+ Info</button><br><br>
+    <button onclick="reply('eligible')">Who can donate?</button><br><br>
+    <button onclick="reply('frequency')">How often donate?</button>
 
-    output.innerText = reply;
-}
-</script>
+    <p id="chatResponse" style="margin-top:10px; font-weight:bold;"></p>
+
+    <button onclick="toggleChat()" style="margin-top:10px;">Close</button>
+
+</div>
 
 </body>
 </html>
