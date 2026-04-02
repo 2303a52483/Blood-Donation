@@ -45,42 +45,29 @@ document.addEventListener("DOMContentLoaded", function () {
 // ============================
 // 🤖 CHATBOT FUNCTION (FIXED)
 // ============================
-function chatbot() {
-
-    let input = document.getElementById("userInput").value.toLowerCase();
-    let output = document.getElementById("response");
-
-    if (input === "") {
-        output.innerText = "⚠ Please type something";
-        return;
-    }
-
-    let reply = "";
-
-    if (input.includes("o+")) {
-        reply = "O+ can receive from O+ and O-";
-    } 
-    else if (input.includes("a+")) {
-        reply = "A+ can receive from A+, A-, O+, O-";
-    } 
-    else if (input.includes("b+")) {
-        reply = "B+ can receive from B+, B-, O+, O-";
-    } 
-    else if (input.includes("ab+")) {
-        reply = "AB+ can receive from all blood groups";
-    } 
-    else if (input.includes("eligible")) {
-        reply = "Age 18-65, weight above 50kg";
-    } 
-    else if (input.includes("hello") || input.includes("hi")) {
-        reply = "Hello broh 😊 Ask me about blood donation!";
-    } 
-    else {
-        reply = "❓ Try: O+, A+, eligible";
-    }
-
-    output.innerText = reply;
+<script>
+function toggleChat() {
+    let box = document.getElementById("chatBox");
+    box.style.display = box.style.display === "none" ? "block" : "none";
 }
+
+function reply(type) {
+    let output = document.getElementById("chatResponse");
+
+    if (type === "o+") {
+        output.innerText = "O+ can receive from O+ and O-";
+    } 
+    else if (type === "a+") {
+        output.innerText = "A+ can receive from A+, A-, O+, O-";
+    } 
+    else if (type === "eligible") {
+        output.innerText = "Age 18-65, weight above 50kg";
+    } 
+    else if (type === "frequency") {
+        output.innerText = "You can donate every 3 months";
+    }
+}
+</script>
 
 
 // ============================
