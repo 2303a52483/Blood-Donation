@@ -30,79 +30,30 @@
         <a href="donateblood.html">Donate Now</a>
         <a href="needblood.html">Request Blood</a>
         <a href="circle.html"><button>🚨 Emergency Circle</button></a>
+        <!-- Button to open chatbot page -->
+        <a href="chatbot.html"><button>🤖 Chat with me</button></a>
     </div>
 </section>
 
 <!-- Profile Section -->
 <section class="profile-section">
     <div class="container">
-
         <div class="left">
             <h2>Volunteers ❤️</h2>
             <p>Arjun</p>
             <p>Sushma</p>
             <p>Navya</p>
         </div>
-
         <div class="right">
-            <img src="myphoto.jpeg .jpeg" width="150">
+            <img src="myphoto.jpeg" width="150" alt="Profile Photo">
         </div>
-
     </div>
 </section>
-
-<!-- 🤖 CHATBOT -->
-<div style="position:fixed; bottom:20px; right:20px; width:260px; background:white; border-radius:10px; padding:12px; box-shadow:0 0 15px rgba(0,0,0,0.3); z-index:999;">
-
-    <h4 style="color:black;">🤖 Ask Me</h4>
-
-    <input type="text" id="userInput" placeholder="Ask something..." 
-           style="width:100%; padding:6px; margin-top:5px;">
-    
-    <button onclick="chatbot()" 
-            style="width:100%; margin-top:8px; padding:6px; background:#ff4b5c; color:white; border:none;">
-        Send
-    </button>
-
-    <p id="response" style="margin-top:10px; color:black; font-size:14px; font-weight:bold;"></p>
-
-</div>
 
 <!-- Footer -->
 <footer>
     <p>© 2026 Blood Donation Hub</p>
 </footer>
-
-<!-- ✅ WORKING CHATBOT SCRIPT -->
-<!-- 🤖 CHAT ICON -->
-<div id="chatIcon" onclick="toggleChat()"
-     style="position:fixed; bottom:20px; right:20px; background:#ff4b5c; 
-     width:60px; height:60px; border-radius:50%; display:flex; 
-     align-items:center; justify-content:center; color:white; 
-     font-size:28px; cursor:pointer;">
-    🤖
-</div>
-
-<!-- 💬 CHAT BOX -->
-<div id="chatBox"
-     style="display:none; position:fixed; bottom:90px; right:20px; width:280px; 
-     background:white; border-radius:10px; padding:10px; 
-     box-shadow:0 0 15px rgba(0,0,0,0.3);">
-
-    <h4>Ask Me</h4>
-
-    <p>Select an option:</p>
-
-    <button onclick="reply('o+')">O+ Info</button><br><br>
-    <button onclick="reply('a+')">A+ Info</button><br><br>
-    <button onclick="reply('eligible')">Who can donate?</button><br><br>
-    <button onclick="reply('frequency')">How often donate?</button>
-
-    <p id="chatResponse" style="margin-top:10px; font-weight:bold;"></p>
-
-    <button onclick="toggleChat()" style="margin-top:10px;">Close</button>
-
-</div>
 
 </body>
 </html>
