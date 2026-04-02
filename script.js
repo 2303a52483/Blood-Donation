@@ -47,50 +47,39 @@ document.addEventListener("DOMContentLoaded", function () {
 // ============================
 function chatbot() {
 
-    let inputBox = document.getElementById("userInput");
-    let outputBox = document.getElementById("response");
+    let input = document.getElementById("userInput").value.toLowerCase();
+    let output = document.getElementById("response");
 
-    // 🔥 Safety check
-    if (!inputBox || !outputBox) {
-        alert("❌ Chatbot not connected properly");
+    if (input === "") {
+        output.innerText = "⚠ Please type something";
         return;
     }
 
-    let input = inputBox.value.toLowerCase().trim();
     let reply = "";
 
-    if (input === "") {
-        reply = "⚠ Please type something";
-    }
-    else if (input.includes("donate")) {
-        reply = "You can donate blood every 3 months";
-    }
-    else if (input.includes("o+")) {
+    if (input.includes("o+")) {
         reply = "O+ can receive from O+ and O-";
-    }
+    } 
     else if (input.includes("a+")) {
         reply = "A+ can receive from A+, A-, O+, O-";
-    }
+    } 
     else if (input.includes("b+")) {
         reply = "B+ can receive from B+, B-, O+, O-";
-    }
+    } 
     else if (input.includes("ab+")) {
         reply = "AB+ can receive from all blood groups";
-    }
-    else if (input.includes("o-")) {
-        reply = "O- is universal donor";
-    }
+    } 
     else if (input.includes("eligible")) {
-        reply = "Age 18-65, weight above 50kg, healthy person can donate";
-    }
+        reply = "Age 18-65, weight above 50kg";
+    } 
+    else if (input.includes("hello") || input.includes("hi")) {
+        reply = "Hello broh 😊 Ask me about blood donation!";
+    } 
     else {
-        reply = "Try typing blood group (O+, A+, etc) or 'eligible'";
+        reply = "❓ Try: O+, A+, eligible";
     }
 
-    outputBox.innerText = reply;
-
-    // 🔥 clear input after send
-    inputBox.value = "";
+    output.innerText = reply;
 }
 
 
