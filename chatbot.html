@@ -13,14 +13,17 @@
             margin-top: 50px;
         }
 
-        select, button {
+        input, button {
             margin: 10px;
             padding: 10px 15px;
             border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button {
             background-color: #ff4d5a;
             color: white;
-            cursor: pointer;
-            border-radius: 5px;
         }
 
         .response {
@@ -34,22 +37,12 @@
 <div class="chat-container">
     <h2>🤖 Blood Group Chatbot</h2>
 
-    <p>Select your blood group:</p>
-    <select id="bloodGroup">
-        <option value="">--Choose--</option>
-        <option value="O-">O-</option>
-        <option value="O+">O+</option>
-        <option value="A-">A-</option>
-        <option value="A+">A+</option>
-        <option value="B-">B-</option>
-        <option value="B+">B+</option>
-        <option value="AB-">AB-</option>
-        <option value="AB+">AB+</option>
-    </select>
+    <p>Enter your blood group:</p>
+    <input type="text" id="bloodInput" placeholder="E.g., O+, A-, AB+">
 
     <div class="options">
-        <button onclick="reply('donate')">Who can donate to me?</button>
-        <button onclick="reply('receive')">Who can I receive from?</button>
+        <button onclick="reply('donate')">Who can I donate to?</button>
+        <button onclick="reply('receive')">Who can donate to me?</button>
         <button onclick="reply('time')">When can I donate again?</button>
     </div>
 
