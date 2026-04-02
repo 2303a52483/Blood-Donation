@@ -1,5 +1,5 @@
 // ============================
-// 🚀 WAIT FOR PAGE LOAD
+// 🚀 WAIT FOR PAGE LOAD (Forms)
 // ============================
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -41,50 +41,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-
-// ============================
-// 🤖 CHATBOT FUNCTION (FIXED)
-// ============================
-<script>
-function toggleChat() {
-    let box = document.getElementById("chatBox");
-    box.style.display = box.style.display === "none" ? "block" : "none";
-}
-
-function reply(type) {
-    let output = document.getElementById("chatResponse");
-
-    if (type === "o+") {
-        output.innerText = "O+ can receive from O+ and O-";
-    } 
-    else if (type === "a+") {
-        output.innerText = "A+ can receive from A+, A-, O+, O-";
-    } 
-    else if (type === "eligible") {
-        output.innerText = "Age 18-65, weight above 50kg";
-    } 
-    else if (type === "frequency") {
-        output.innerText = "You can donate every 3 months";
-    }
-}
-</script>
-
-
 // ============================
 // 🚨 EMERGENCY CIRCLE FEATURE
 // ============================
-
-// Get members
 function getMembers() {
     return JSON.parse(localStorage.getItem("circle")) || [];
 }
 
-// Save members
 function saveMembers(data) {
     localStorage.setItem("circle", JSON.stringify(data));
 }
 
-// Add Member
 function addMember() {
     let name = document.getElementById("name").value;
     let blood = document.getElementById("blood").value;
@@ -96,36 +63,29 @@ function addMember() {
 
     let members = getMembers();
     members.push({ name, blood });
-
     saveMembers(members);
 
     alert("✅ Member added to circle");
-
     document.getElementById("name").value = "";
     document.getElementById("blood").value = "";
 }
 
-// Send Alert
 function sendAlert() {
     let needBlood = document.getElementById("needBlood").value;
-
     if (needBlood === "") {
         alert("⚠ Enter required blood group");
         return;
     }
 
     let members = getMembers();
-
     let matched = members.filter(m =>
         m.blood === needBlood || m.blood === "O-"
     );
 
     let list = document.getElementById("result");
-
     if (!list) return;
 
     list.innerHTML = "";
-
     if (matched.length === 0) {
         list.innerHTML = "<li>❌ No members found</li>";
     } else {
@@ -134,5 +94,50 @@ function sendAlert() {
             li.textContent = "🚨 " + m.name + " (" + m.blood + ")";
             list.appendChild(li);
         });
+    } 
+}
+
+// ============================
+// 🤖 CHATBOT FUNCTIONS
+// ============================
+
+// Reply based on button clicked
+function reply(type) {
+    const responseBox = document.getElementById("responseBox");
+    if (!responseBox) return;
+
+    let response = "";
+
+    if(type === "donate") {
+        response = "O- can donate to all blood groups.";
     }
+    else if(type === "receive") {
+        response = "O+ can receive from O+ and O-.";
+    }
+    else if(type === "time") {
+        response = "You can donate blood every 3 months.";
+    }
+
+    responseBox.innerText = response;
+}
+
+// Optional free text input for user questions
+function chatbot() {
+    const userInput = document.getElementById("userInput");
+    const responseBox = document.getElementById("responseBox");
+    if (!userInput || !responseBox) return;
+
+    const text = userInput.value.toLowerCase();
+
+    if(text.includes("donate")) {
+        responseBox.innerText = "Anyone healthy can donate blood every 3 months.";
+    } else if(text.includes("o+")) {
+        responseBox.innerText = "O+ can donate to A+, B+, AB+, O+.";
+    } else if(text.includes("a+")) {
+        responseBox.innerText = "A+ can donate to A+ and AB+.";
+    } else {
+        responseBox.innerText = "Sorry, I can only answer simple blood donation questions.";
+    }
+
+    userInput.value = "";
 }
