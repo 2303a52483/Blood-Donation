@@ -106,18 +106,27 @@ function sendAlert() {
 // 🤖 CHATBOT FUNCTIONS (Dynamic Blood Groups)
 // ============================
 
+// ============================
+// 🤖 CHATBOT FUNCTIONS (Typed Blood Group)
+// ============================
+
 function reply(type) {
-    const bloodGroup = document.getElementById("bloodGroup").value;
+    const bloodGroup = document.getElementById("bloodInput").value.trim().toUpperCase();
     const responseBox = document.getElementById("responseBox");
 
     if (!bloodGroup) {
-        responseBox.innerText = "⚠ Please select a blood group first!";
+        responseBox.innerText = "⚠ Please enter your blood group!";
         return;
     }
 
-    let response = "";
+    // Valid blood groups
+    const validGroups = ["O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"];
+    if (!validGroups.includes(bloodGroup)) {
+        responseBox.innerText = "⚠ Invalid blood group! Use O-, O+, A-, A+, B-, B+, AB-, AB+.";
+        return;
+    }
 
-    // Define who can donate TO this group
+    // Who can donate TO this group
     const canReceive = {
         "O-": ["O-"],
         "O+": ["O+", "O-"],
@@ -129,7 +138,7 @@ function reply(type) {
         "AB+": ["AB+", "AB-", "A+", "A-", "B+", "B-", "O+", "O-"]
     };
 
-    // Define who this blood group can donate TO
+    // Who this group can donate TO
     const canDonate = {
         "O-": ["O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"],
         "O+": ["O+", "A+", "B+", "AB+"],
@@ -141,13 +150,13 @@ function reply(type) {
         "AB+": ["AB+"]
     };
 
+    let response = "";
+
     if (type === "donate") {
         response = `You can donate to: ${canDonate[bloodGroup].join(", ")}`;
-    } 
-    else if (type === "receive") {
+    } else if (type === "receive") {
         response = `You can receive from: ${canReceive[bloodGroup].join(", ")}`;
-    } 
-    else if (type === "time") {
+    } else if (type === "time") {
         response = "You can donate blood every 3 months.";
     }
 
