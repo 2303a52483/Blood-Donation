@@ -102,42 +102,54 @@ function sendAlert() {
 // ============================
 
 // Reply based on button clicked
+// ============================
+// 🤖 CHATBOT FUNCTIONS (Dynamic Blood Groups)
+// ============================
+
 function reply(type) {
+    const bloodGroup = document.getElementById("bloodGroup").value;
     const responseBox = document.getElementById("responseBox");
-    if (!responseBox) return;
+
+    if (!bloodGroup) {
+        responseBox.innerText = "⚠ Please select a blood group first!";
+        return;
+    }
 
     let response = "";
 
-    if(type === "donate") {
-        response = "O- can donate to all blood groups.";
-    }
-    else if(type === "receive") {
-        response = "O+ can receive from O+ and O-.";
-    }
-    else if(type === "time") {
+    // Define who can donate TO this group
+    const canReceive = {
+        "O-": ["O-"],
+        "O+": ["O+", "O-"],
+        "A-": ["A-", "O-"],
+        "A+": ["A+", "A-", "O+", "O-"],
+        "B-": ["B-", "O-"],
+        "B+": ["B+", "B-", "O+", "O-"],
+        "AB-": ["AB-", "A-", "B-", "O-"],
+        "AB+": ["AB+", "AB-", "A+", "A-", "B+", "B-", "O+", "O-"]
+    };
+
+    // Define who this blood group can donate TO
+    const canDonate = {
+        "O-": ["O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"],
+        "O+": ["O+", "A+", "B+", "AB+"],
+        "A-": ["A-", "A+", "AB-", "AB+"],
+        "A+": ["A+", "AB+"],
+        "B-": ["B-", "B+", "AB-", "AB+"],
+        "B+": ["B+", "AB+"],
+        "AB-": ["AB-", "AB+"],
+        "AB+": ["AB+"]
+    };
+
+    if (type === "donate") {
+        response = `You can donate to: ${canDonate[bloodGroup].join(", ")}`;
+    } 
+    else if (type === "receive") {
+        response = `You can receive from: ${canReceive[bloodGroup].join(", ")}`;
+    } 
+    else if (type === "time") {
         response = "You can donate blood every 3 months.";
     }
 
     responseBox.innerText = response;
-}
-
-// Optional free text input for user questions
-function chatbot() {
-    const userInput = document.getElementById("userInput");
-    const responseBox = document.getElementById("responseBox");
-    if (!userInput || !responseBox) return;
-
-    const text = userInput.value.toLowerCase();
-
-    if(text.includes("donate")) {
-        responseBox.innerText = "Anyone healthy can donate blood every 3 months.";
-    } else if(text.includes("o+")) {
-        responseBox.innerText = "O+ can donate to A+, B+, AB+, O+.";
-    } else if(text.includes("a+")) {
-        responseBox.innerText = "A+ can donate to A+ and AB+.";
-    } else {
-        responseBox.innerText = "Sorry, I can only answer simple blood donation questions.";
-    }
-
-    userInput.value = "";
 }
