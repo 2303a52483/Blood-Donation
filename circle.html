@@ -1,121 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Blood Donation Hub</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Navbar */
-        header {
-            background: #e74c3c;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
-
-        nav a {
-            color: white;
-            margin: 0 10px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        /* Emergency Circle */
-        .circle {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 80px;
-            height: 80px;
-            background: red;
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 80px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 999;
-        }
-
-        .emergency-list {
-            display: none;
-            position: absolute;
-            bottom: 90px;
-            right: 0;
-            background: white;
-            color: black;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 300px;
-            max-height: 300px;
-            overflow-y: auto;
-            padding: 10px;
-        }
-
-        .emergency-list .item {
-            padding: 5px;
-            border-bottom: 1px solid #eee;
-        }
-
-        /* Priority colors */
-        .priority-1 { color: red; font-weight: bold; }     /* High */
-        .priority-2 { color: orange; }                     /* Medium */
-        .priority-3 { color: green; }                      /* Low */
-    </style>
+<meta charset="UTF-8">
+<title>Emergency Circle Widget</title>
+<style>
+/* Emergency Circle Styles */
+#emergencyCircle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 80px;
+    height: 80px;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 80px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 999;
+}
+#emergencyPanel {
+    display: none;
+    position: fixed;
+    bottom: 120px;
+    right: 30px;
+    width: 320px;
+    background: #fff;
+    border: 2px solid red;
+    border-radius: 10px;
+    padding: 15px;
+    z-index: 1000;
+}
+#emergencyPanel h3 { margin-top: 0; color: red; }
+#emergencyPanel input, #emergencyPanel select, #emergencyPanel button {
+    width: 100%;
+    padding: 7px;
+    margin: 5px 0;
+}
+#emergencyList {
+    max-height: 200px;
+    overflow-y: auto;
+    border-top: 1px solid #ccc;
+    margin-top: 10px;
+}
+.item { padding: 5px; border-bottom: 1px solid #eee; }
+.priority-1 { color: red; font-weight: bold; }
+.priority-2 { color: orange; }
+.priority-3 { color: green; }
+</style>
 </head>
 <body>
 
-<header>
-    <h1>🩸 Blood Donation Hub</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="donate.html">Donate</a>
-        <a href="needblood.html">Need Blood</a>
-        <a href="admin.html">Admin</a>
-    </nav>
-</header>
-
-<!-- Main content -->
-<main>
-    <h2>Welcome to the Blood Donation Hub</h2>
-    <p>Click the emergency circle to see priority-wise blood requests.</p>
-</main>
-
 <!-- Emergency Circle -->
-<div id="emergencyCircle" class="circle">⚠️</div>
-<div id="emergencyList" class="emergency-list"></div>
+<div id="emergencyCircle">⚠️</div>
+
+<!-- Emergency Panel -->
+<div id="emergencyPanel">
+    <h3>Emergency Requests</h3>
+
+    <!-- Add Member -->
+    <input type="text" id="memberName" placeholder="Member Name">
+    <input type="text" id="memberBlood" placeholder="Blood Group">
+    <select id="memberPriority">
+        <option value="1">High Priority</option>
+        <option value="2">Medium Priority</option>
+        <option value="3">Low Priority</option>
+    </select>
+    <button id="addMemberBtn">Add Member</button>
+
+    <!-- Emergency List -->
+    <div id="emergencyList"></div>
+
+    <!-- Send Alert -->
+    <button id="sendAlertBtn" style="background:red; color:white; margin-top:10px;">Send Alert</button>
+</div>
 
 <script>
-    const emergencyCircle = document.getElementById('emergencyCircle');
-    const emergencyList = document.getElementById('emergencyList');
+// Toggle Panel
+const circle = document.getElementById('emergencyCircle');
+const panel = document.getElementById('emergencyPanel');
+circle.addEventListener('click', () => {
+    panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+});
 
-    // Sample data - replace with your actual members / emergency requests
-    const emergencies = [
-        { name: 'John Doe', blood: 'A+', priority: 1 },
-        { name: 'Jane Smith', blood: 'B-', priority: 3 },
-        { name: 'Alex Ray', blood: 'O+', priority: 2 },
-        { name: 'Mary Lee', blood: 'AB+', priority: 1 }
-    ];
+// Emergency Data
+let emergencies = [];
 
-    // Sort by priority (1 = highest)
-    emergencies.sort((a, b) => a.priority - b.priority);
+// Add Member
+document.getElementById('addMemberBtn').addEventListener('click', () => {
+    const name = document.getElementById('memberName').value.trim();
+    const blood = document.getElementById('memberBlood').value.trim();
+    const priority = parseInt(document.getElementById('memberPriority').value);
+    if(name && blood) {
+        emergencies.push({ name, blood, priority });
+        emergencies.sort((a,b)=>a.priority-b.priority); // Sort by priority
+        updateList();
+        document.getElementById('memberName').value = '';
+        document.getElementById('memberBlood').value = '';
+    }
+});
 
-    // Show/hide list on circle click
-    emergencyCircle.addEventListener('click', () => {
-        emergencyList.style.display = emergencyList.style.display === 'block' ? 'none' : 'block';
-    });
-
-    // Populate emergency list
-    emergencyList.innerHTML = emergencies.map(e => `
+// Update List
+function updateList() {
+    const list = document.getElementById('emergencyList');
+    list.innerHTML = emergencies.map(e => `
         <div class="item priority-${e.priority}">
-            <strong>${e.name}</strong> (${e.blood}) - Priority: ${e.priority}
+            ${e.name} (${e.blood}) - Priority: ${e.priority}
+            <button onclick="donateBlood('${e.name}')">Donate</button>
         </div>
     `).join('');
+}
+
+// Donate Blood
+function donateBlood(name) {
+    alert(`Blood donation alert sent for ${name}!`);
+    emergencies = emergencies.filter(e => e.name !== name);
+    updateList();
+}
+
+// Send General Alert
+document.getElementById('sendAlertBtn').addEventListener('click', () => {
+    if(emergencies.length === 0) return alert('No emergencies to alert!');
+    alert('Emergency alert sent to all members!');
+});
 </script>
 
 </body>
