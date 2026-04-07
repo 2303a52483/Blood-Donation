@@ -1,64 +1,57 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Dashboard</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        h2 { color: red; }
-        .box { border: 1px solid #ccc; padding: 10px; margin: 10px; }
-    </style>
-</head>
-<body>
-
-<h1>🩸 Blood Donation Admin Dashboard</h1>
-
-<div class="box">
-    <h2>👤 Total Signed Up Users</h2>
-    <p id="signupCount"></p>
-</div>
-
-<div class="box">
-    <h2>🔑 Logged In Users</h2>
-    <p id="loginCount"></p>
-</div>
-
-<div class="box">
-    <h2>❤️ Donors List</h2>
-    <div id="donorList"></div>
-</div>
-
-<div class="box">
-    <h2>🆘 Blood Requests</h2>
-    <div id="requestList"></div>
-</div>
-
 <script>
 
-// SIGNUP COUNT
-let users = JSON.parse(localStorage.getItem("users")) || [];
+// Helper to get data from multiple possible keys
+function getData(keys) {
+    for (let key of keys) {
+        let data = JSON.parse(localStorage.getItem(key));
+        if (data && data.length > 0) {
+            return data;
+        }
+    }
+    return [];
+}
+
+// SIGNUP COUNT (try different keys)
+let users = getData(["users", "signupUsers"]);
 document.getElementById("signupCount").innerText = users.length;
 
 // LOGIN COUNT
-let logins = JSON.parse(localStorage.getItem("logins")) || [];
+let logins = getData(["logins", "loginUsers"]);
 document.getElementById("loginCount").innerText = logins.length;
 
-// DONORS
-let donors = JSON.parse(localStorage.getItem("donors")) || [];
+// DONORS LIST
+let donors = getData(["donors", "circle", "members"]);
 let donorHTML = "";
-donors.forEach(d => {
-    donorHTML += `<p>${d.name} - ${d.blood}</p>`;
-});
+
+if (donors.length === 0) {
+    donorHTML = "<p>No donors found</p>";
+} else {
+    donors.forEach(d => {
+        donorHTML += `<p>❤️ ${d.name} - ${d.blood}</p>`;
+    });
+}
 document.getElementById("donorList").innerHTML = donorHTML;
 
-// REQUESTS
-let requests = JSON.parse(localStorage.getItem("requests")) || [];
+
+// REQUESTS LIST (with priority support)
+let requests = getData(["requests", "bloodRequests"]);
 let requestHTML = "";
-requests.forEach(r => {
-    requestHTML += `<p>${r.name} needs ${r.blood}</p>`;
-});
+
+if (requests.length === 0) {
+    requestHTML = "<p>No requests found</p>";
+} else {
+    requests.forEach(r => {
+
+        let priorityText = "";
+        if (r.priority == 3) priorityText = "🔴 Critical";
+        else if (r.priority == 2) priorityText = "🟠 Medium";
+        else if (r.priority == 1) priorityText = "🟢 Low";
+        else priorityText = "⚪ Normal";
+
+        requestHTML += `<p>🆘 ${r.name} needs ${r.blood} - ${priorityText}</p>`;
+    });
+}
+
 document.getElementById("requestList").innerHTML = requestHTML;
 
 </script>
-
-</body>
-</html>
