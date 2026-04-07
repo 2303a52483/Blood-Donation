@@ -1,179 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Blood Priority Queue</title>
+    <title>Admin Dashboard</title>
 
-<style>
-body {
-    font-family: Arial;
-    background: linear-gradient(to right, #ff4b5c, #ff7a7a);
-    text-align: center;
-    color: white;
-}
+    <style>
+        body { 
+            font-family: Arial; 
+            padding: 20px; 
+            background: #f5f5f5;
+        }
 
-.container {
-    background: white;
-    color: black;
-    width: 350px;
-    margin: 50px auto;
-    padding: 20px;
-    border-radius: 15px;
-}
+        h1 { text-align: center; }
 
-input, select {
-    width: 90%;
-    padding: 10px;
-    margin: 8px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
+        h2 { color: red; }
 
-button {
-    width: 95%;
-    padding: 10px;
-    background: #ff4b5c;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
+        .box { 
+            border: 1px solid #ccc; 
+            padding: 15px; 
+            margin: 15px; 
+            border-radius: 10px; 
+            background: white;
+        }
 
-button:hover {
-    background: #e63e50;
-}
+        button {
+            padding: 6px 12px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-li {
-    background: #ffe5e8;
-    margin: 5px;
-    padding: 10px;
-    border-radius: 8px;
-}
-</style>
+        .refresh { background: green; color: white; }
+        .clear { background: black; color: white; }
+
+    </style>
 </head>
 
 <body>
 
-<h1>🚨 Blood Priority Queue</h1>
+<h1>🩸 Blood Donation Admin Dashboard</h1>
 
-<div class="container">
+<div style="text-align:center;">
+    <button class="refresh" onclick="loadData()">🔄 Refresh</button>
+    <button class="clear" onclick="clearAll()">🗑 Clear All Data</button>
+</div>
 
-    <h3>Add Emergency Patient</h3>
-    <input type="text" id="pname" placeholder="Patient Name">
-    <input type="text" id="pblood" placeholder="Blood Group (Ex: O+)">
+<div class="box">
+    <h2>👤 Total Signed Up Users</h2>
+    <p id="signupCount">0</p>
+</div>
 
-    <select id="priority">
-        <option value="3">🔴 Critical</option>
-        <option value="2">🟠 Medium</option>
-        <option value="1">🟢 Low</option>
-    </select>
+<div class="box">
+    <h2>🔑 Logged In Users</h2>
+    <p id="loginCount">0</p>
+</div>
 
-    <button onclick="addRequest()">Add Request</button>
+<div class="box">
+    <h2>❤️ Donors List</h2>
+    <div id="donorList">No donors yet</div>
+</div>
 
-    <hr>
-
-    <!-- NEW BUTTON -->
-    <button onclick="showAllRequests()">View All Requests</button>
-
-    <button onclick="showPriority()">Show Priority Order</button>
-
-    <h3>Output:</h3>
-    <ul id="result"></ul>
-
+<div class="box">
+    <h2>🆘 Blood Requests</h2>
+    <div id="requestList">No requests yet</div>
 </div>
 
 <script>
 
-// Get data
-function getRequests() {
-    return JSON.parse(localStorage.getItem("requests")) || [];
+// Safe get function
+function getData(key) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) || [];
+    } catch (e) {
+        return [];
+    }
 }
 
-// Save data
-function saveRequests(data) {
-    localStorage.setItem("requests", JSON.stringify(data));
-}
+// Load all data
+function loadData() {
 
-// Add request
-function addRequest() {
-    let name = document.getElementById("pname").value;
-    let blood = document.getElementById("pblood").value;
-    let priority = parseInt(document.getElementById("priority").value);
+    // USERS
+    let users = getData("users");
+    document.getElementById("signupCount").innerText = users.length;
 
-    if(name === "" || blood === "") {
-        alert("⚠ Fill all fields");
-        return;
+    // LOGINS
+    let logins = getData("logins");
+    document.getElementById("loginCount").innerText = logins.length;
+
+    // DONORS
+    let donors = getData("donors");
+    let donorHTML = "";
+
+    if (donors.length === 0) {
+        donorHTML = "<p>No donors found</p>";
+    } else {
+        donors.forEach(d => {
+            donorHTML += `<p>❤️ ${d.name} - ${d.blood}</p>`;
+        });
     }
 
-    let requests = getRequests();
+    document.getElementById("donorList").innerHTML = donorHTML;
 
-    requests.push({
-        name: name,
-        blood: blood,
-        priority: priority,
-        time: Date.now()
-    });
 
-    saveRequests(requests);
-
-    alert("✅ Request Added");
-
-    document.getElementById("pname").value = "";
-    document.getElementById("pblood").value = "";
-}
-
-// 🔥 SHOW ALL REQUESTS (NEW)
-function showAllRequests() {
-    let requests = getRequests();
-    let list = document.getElementById("result");
-    list.innerHTML = "";
+    // REQUESTS
+    let requests = getData("requests");
+    let requestHTML = "";
 
     if (requests.length === 0) {
-        list.innerHTML = "<li>No requests found</li>";
-        return;
+        requestHTML = "<p>No requests found</p>";
+    } else {
+        requests.forEach(r => {
+
+            let priority =
+                r.priority == 3 ? "🔴 Critical" :
+                r.priority == 2 ? "🟠 Medium" :
+                r.priority == 1 ? "🟢 Low" : "⚪ Normal";
+
+            requestHTML += `<p>🆘 ${r.name} needs ${r.blood} - ${priority}</p>`;
+        });
     }
 
-    requests.forEach((r, index) => {
-        let li = document.createElement("li");
-
-        let pText = r.priority == 3 ? "🔴 Critical" :
-                    r.priority == 2 ? "🟠 Medium" : "🟢 Low";
-
-        li.textContent =
-            (index + 1) + ". " + r.name +
-            " (" + r.blood + ") - " + pText;
-
-        list.appendChild(li);
-    });
+    document.getElementById("requestList").innerHTML = requestHTML;
 }
 
-// SORTED PRIORITY VIEW
-function showPriority() {
-    let requests = getRequests();
-
-    requests.sort((a, b) => {
-        if (b.priority !== a.priority) {
-            return b.priority - a.priority;
-        }
-        return a.time - b.time;
-    });
-
-    let list = document.getElementById("result");
-    list.innerHTML = "";
-
-    requests.forEach((r, index) => {
-        let li = document.createElement("li");
-
-        let pText = r.priority == 3 ? "🔴 Critical" :
-                    r.priority == 2 ? "🟠 Medium" : "🟢 Low";
-
-        li.textContent =
-            (index + 1) + "️⃣ " + r.name +
-            " (" + r.blood + ") - " + pText;
-
-        list.appendChild(li);
-    });
+// Clear all data
+function clearAll() {
+    if (confirm("⚠ Delete all data?")) {
+        localStorage.clear();
+        loadData();
+    }
 }
+
+// 🔥 IMPORTANT FIX → load after page fully loads
+window.onload = function() {
+    loadData();
+};
 
 </script>
 
