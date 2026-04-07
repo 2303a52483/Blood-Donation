@@ -1,180 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Blood Priority Queue</title>
+    <meta charset="UTF-8">
+    <title>Blood Donation Hub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-<style>
-body {
-    font-family: Arial;
-    background: linear-gradient(to right, #ff4b5c, #ff7a7a);
-    text-align: center;
-    color: white;
-}
+        /* Navbar */
+        header {
+            background: #e74c3c;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
 
-.container {
-    background: white;
-    color: black;
-    width: 350px;
-    margin: 50px auto;
-    padding: 20px;
-    border-radius: 15px;
-}
+        nav a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-input, select {
-    width: 90%;
-    padding: 10px;
-    margin: 8px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
+        /* Emergency Circle */
+        .circle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 80px;
+            height: 80px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 80px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 999;
+        }
 
-button {
-    width: 95%;
-    padding: 10px;
-    background: #ff4b5c;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
+        .emergency-list {
+            display: none;
+            position: absolute;
+            bottom: 90px;
+            right: 0;
+            background: white;
+            color: black;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
 
-button:hover {
-    background: #e63e50;
-}
+        .emergency-list .item {
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
 
-li {
-    background: #ffe5e8;
-    margin: 5px;
-    padding: 10px;
-    border-radius: 8px;
-}
-</style>
+        /* Priority colors */
+        .priority-1 { color: red; font-weight: bold; }     /* High */
+        .priority-2 { color: orange; }                     /* Medium */
+        .priority-3 { color: green; }                      /* Low */
+    </style>
 </head>
-
 <body>
 
-<h1>🚨 Blood Priority Queue</h1>
+<header>
+    <h1>🩸 Blood Donation Hub</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="donate.html">Donate</a>
+        <a href="needblood.html">Need Blood</a>
+        <a href="admin.html">Admin</a>
+    </nav>
+</header>
 
-<div class="container">
+<!-- Main content -->
+<main>
+    <h2>Welcome to the Blood Donation Hub</h2>
+    <p>Click the emergency circle to see priority-wise blood requests.</p>
+</main>
 
-    <h3>Add Emergency Patient</h3>
-    <input type="text" id="pname" placeholder="Patient Name">
-    <input type="text" id="pblood" placeholder="Blood Group (Ex: O+)">
-
-    <select id="priority">
-        <option value="3">🔴 Critical</option>
-        <option value="2">🟠 Medium</option>
-        <option value="1">🟢 Low</option>
-    </select>
-
-    <button onclick="addRequest()">Add Request</button>
-
-    <hr>
-
-    <!-- NEW BUTTON -->
-    <button onclick="showAllRequests()">View All Requests</button>
-
-    <button onclick="showPriority()">Show Priority Order</button>
-
-    <h3>Output:</h3>
-    <ul id="result"></ul>
-
-</div>
+<!-- Emergency Circle -->
+<div id="emergencyCircle" class="circle">⚠️</div>
+<div id="emergencyList" class="emergency-list"></div>
 
 <script>
+    const emergencyCircle = document.getElementById('emergencyCircle');
+    const emergencyList = document.getElementById('emergencyList');
 
-// Get data
-function getRequests() {
-    return JSON.parse(localStorage.getItem("requests")) || [];
-}
+    // Sample data - replace with your actual members / emergency requests
+    const emergencies = [
+        { name: 'John Doe', blood: 'A+', priority: 1 },
+        { name: 'Jane Smith', blood: 'B-', priority: 3 },
+        { name: 'Alex Ray', blood: 'O+', priority: 2 },
+        { name: 'Mary Lee', blood: 'AB+', priority: 1 }
+    ];
 
-// Save data
-function saveRequests(data) {
-    localStorage.setItem("requests", JSON.stringify(data));
-}
+    // Sort by priority (1 = highest)
+    emergencies.sort((a, b) => a.priority - b.priority);
 
-// Add request
-function addRequest() {
-    let name = document.getElementById("pname").value;
-    let blood = document.getElementById("pblood").value;
-    let priority = parseInt(document.getElementById("priority").value);
-
-    if(name === "" || blood === "") {
-        alert("⚠ Fill all fields");
-        return;
-    }
-
-    let requests = getRequests();
-
-    requests.push({
-        name: name,
-        blood: blood,
-        priority: priority,
-        time: Date.now()
+    // Show/hide list on circle click
+    emergencyCircle.addEventListener('click', () => {
+        emergencyList.style.display = emergencyList.style.display === 'block' ? 'none' : 'block';
     });
 
-    saveRequests(requests);
-
-    alert("✅ Request Added");
-
-    document.getElementById("pname").value = "";
-    document.getElementById("pblood").value = "";
-}
-
-// 🔥 SHOW ALL REQUESTS (NEW)
-function showAllRequests() {
-    let requests = getRequests();
-    let list = document.getElementById("result");
-    list.innerHTML = "";
-
-    if (requests.length === 0) {
-        list.innerHTML = "<li>No requests found</li>";
-        return;
-    }
-
-    requests.forEach((r, index) => {
-        let li = document.createElement("li");
-
-        let pText = r.priority == 3 ? "🔴 Critical" :
-                    r.priority == 2 ? "🟠 Medium" : "🟢 Low";
-
-        li.textContent =
-            (index + 1) + ". " + r.name +
-            " (" + r.blood + ") - " + pText;
-
-        list.appendChild(li);
-    });
-}
-
-// SORTED PRIORITY VIEW
-function showPriority() {
-    let requests = getRequests();
-
-    requests.sort((a, b) => {
-        if (b.priority !== a.priority) {
-            return b.priority - a.priority;
-        }
-        return a.time - b.time;
-    });
-
-    let list = document.getElementById("result");
-    list.innerHTML = "";
-
-    requests.forEach((r, index) => {
-        let li = document.createElement("li");
-
-        let pText = r.priority == 3 ? "🔴 Critical" :
-                    r.priority == 2 ? "🟠 Medium" : "🟢 Low";
-
-        li.textContent =
-            (index + 1) + "️⃣ " + r.name +
-            " (" + r.blood + ") - " + pText;
-
-        list.appendChild(li);
-    });
-}
-
+    // Populate emergency list
+    emergencyList.innerHTML = emergencies.map(e => `
+        <div class="item priority-${e.priority}">
+            <strong>${e.name}</strong> (${e.blood}) - Priority: ${e.priority}
+        </div>
+    `).join('');
 </script>
 
 </body>
