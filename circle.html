@@ -24,11 +24,7 @@
         box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
     }
 
-    h1 {
-        margin-top: 20px;
-    }
-
-    input {
+    input, select {
         width: 90%;
         padding: 10px;
         margin: 8px 0;
@@ -81,6 +77,14 @@
 
     <h3>Emergency Request</h3>
     <input type="text" id="needBlood" placeholder="Required Blood (Ex: O+)">
+
+    <!-- NEW PRIORITY DROPDOWN -->
+    <select id="priority">
+        <option value="3">🔴 Critical</option>
+        <option value="2">🟠 Medium</option>
+        <option value="1">🟢 Low</option>
+    </select>
+
     <button onclick="sendAlert()">Send Alert</button>
 
     <h3>Alert Sent To:</h3>
@@ -119,12 +123,22 @@
 
     function sendAlert() {
         let needBlood = document.getElementById("needBlood").value;
+        let priority = parseInt(document.getElementById("priority").value);
 
         let members = getMembers();
 
+        // Filter matching donors
         let matched = members.filter(m =>
             m.blood === needBlood || m.blood === "O-"
         );
+
+        // Assign priority to each match
+        matched.forEach(m => {
+            m.priority = priority;
+        });
+
+        // Sort by priority (HIGH → LOW)
+        matched.sort((a, b) => b.priority - a.priority);
 
         let list = document.getElementById("result");
         list.innerHTML = "";
@@ -134,7 +148,12 @@
         } else {
             matched.forEach(m => {
                 let li = document.createElement("li");
-                li.textContent = "🚨 " + m.name + " (" + m.blood + ")";
+
+                let pText = m.priority == 3 ? "🔴 Critical" :
+                            m.priority == 2 ? "🟠 Medium" : "🟢 Low";
+
+                li.textContent = "🚨 " + m.name + " (" + m.blood + ") - " + pText;
+
                 list.appendChild(li);
             });
         }
