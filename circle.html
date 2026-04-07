@@ -15,7 +15,7 @@ body {
 .container {
     background: white;
     color: black;
-    width: 350px;
+    width: 380px;
     margin: 50px auto;
     padding: 20px;
     border-radius: 15px;
@@ -58,6 +58,13 @@ li {
 
 <div class="container">
 
+    <h3>Add Donor</h3>
+    <input type="text" id="donorName" placeholder="Donor Name">
+    <input type="text" id="donorBlood" placeholder="Blood Group (Ex: A+)">
+    <button onclick="addDonor()">Add Donor</button>
+
+    <hr>
+
     <h3>Add Emergency Patient</h3>
     <input type="text" id="pname" placeholder="Patient Name">
     <input type="text" id="pblood" placeholder="Blood Group (Ex: O+)">
@@ -72,7 +79,7 @@ li {
 
     <hr>
 
-    <button onclick="showPriority()">Show Priority Order</button>
+    <button onclick="matchDonors()">💉 Match Donors to Patients</button>
 
     <h3>Donation Order:</h3>
     <ul id="result"></ul>
@@ -80,37 +87,37 @@ li {
 </div>
 
 <script>
+// LocalStorage helpers
+function getRequests() { return JSON.parse(localStorage.getItem("requests")) || []; }
+function saveRequests(data) { localStorage.setItem("requests", JSON.stringify(data)); }
 
-// Get stored data
-function getRequests() {
-    return JSON.parse(localStorage.getItem("requests")) || [];
-}
+function getDonors() { return JSON.parse(localStorage.getItem("donors")) || []; }
+function saveDonors(data) { localStorage.setItem("donors", JSON.stringify(data)); }
 
-// Save data
-function saveRequests(data) {
-    localStorage.setItem("requests", JSON.stringify(data));
+// Add donor
+function addDonor() {
+    let name = document.getElementById("donorName").value.trim();
+    let blood = document.getElementById("donorBlood").value.trim();
+    if(!name || !blood) { alert("⚠ Fill all donor fields"); return; }
+
+    let donors = getDonors();
+    donors.push({ name, blood });
+    saveDonors(donors);
+    alert("✅ Donor Added");
+    document.getElementById("donorName").value = "";
+    document.getElementById("donorBlood").value = "";
 }
 
 // Add patient request
 function addRequest() {
-    let name = document.getElementById("pname").value;
-    let blood = document.getElementById("pblood").value;
+    let name = document.getElementById("pname").value.trim();
+    let blood = document.getElementById("pblood").value.trim();
     let priority = parseInt(document.getElementById("priority").value);
 
-    if(name === "" || blood === "") {
-        alert("⚠ Fill all fields");
-        return;
-    }
+    if(!name || !blood) { alert("⚠ Fill all fields"); return; }
 
     let requests = getRequests();
-
-    requests.push({
-        name: name,
-        blood: blood,
-        priority: priority,
-        time: Date.now()
-    });
-
+    requests.push({ name, blood, priority, time: Date.now() });
     saveRequests(requests);
 
     alert("✅ Request Added");
@@ -119,40 +126,45 @@ function addRequest() {
     document.getElementById("pblood").value = "";
 }
 
-// Show priority order
-function showPriority() {
-    let requests = getRequests();
+// Blood Compatibility Check (simplified)
+function compatible(donor, patient) {
+    // exact match OR universal donor O-
+    if(donor === patient || donor === "O-") return true;
+    return false;
+}
 
-    // Sort: Priority first, then time
-    requests.sort((a, b) => {
-        if (b.priority !== a.priority) {
-            return b.priority - a.priority;
-        }
-        return a.time - b.time;
-    });
+// Match donors to patients
+function matchDonors() {
+    let requests = getRequests();
+    let donors = getDonors();
+    requests.sort((a,b)=> b.priority - a.priority || a.time - b.time);
 
     let list = document.getElementById("result");
     list.innerHTML = "";
 
-    if (requests.length === 0) {
-        list.innerHTML = "<li>No requests</li>";
-        return;
-    }
+    if(requests.length === 0) { list.innerHTML = "<li>No patient requests</li>"; return; }
+    if(donors.length === 0) { list.innerHTML = "<li>No donors available</li>"; return; }
 
     requests.forEach((r, index) => {
+        let donorFound = donors.find(d => compatible(d.blood, r.blood));
         let li = document.createElement("li");
 
         let pText = r.priority == 3 ? "🔴 Critical" :
                     r.priority == 2 ? "🟠 Medium" : "🟢 Low";
 
-        li.textContent =
-            (index + 1) + "️⃣ " + r.name +
-            " (" + r.blood + ") - " + pText;
+        if(donorFound){
+            li.textContent = `${r.name} (${r.blood}) - ${pText} → Donate by: ${donorFound.name} (${donorFound.blood})`;
+            // Remove donor after matching
+            donors = donors.filter(d => d !== donorFound);
+        } else {
+            li.textContent = `${r.name} (${r.blood}) - ${pText} → ❌ No compatible donor`;
+        }
 
         list.appendChild(li);
     });
-}
 
+    saveDonors(donors); // update donors list after matching
+}
 </script>
 
 </body>
