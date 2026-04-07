@@ -2,162 +2,179 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Emergency Blood Circle</title>
+<title>Blood Priority Queue</title>
 
 <style>
-    body {
-        font-family: Arial;
-        background: linear-gradient(to right, #ff4b5c, #ff7a7a);
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        color: white;
-    }
+body {
+    font-family: Arial;
+    background: linear-gradient(to right, #ff4b5c, #ff7a7a);
+    text-align: center;
+    color: white;
+}
 
-    .container {
-        background: white;
-        color: black;
-        width: 350px;
-        margin: 50px auto;
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
-    }
+.container {
+    background: white;
+    color: black;
+    width: 350px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 15px;
+}
 
-    input, select {
-        width: 90%;
-        padding: 10px;
-        margin: 8px 0;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-    }
+input, select {
+    width: 90%;
+    padding: 10px;
+    margin: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
 
-    button {
-        width: 95%;
-        padding: 10px;
-        margin-top: 10px;
-        border: none;
-        border-radius: 8px;
-        background: #ff4b5c;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-    }
+button {
+    width: 95%;
+    padding: 10px;
+    background: #ff4b5c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
 
-    button:hover {
-        background: #e63e50;
-    }
+button:hover {
+    background: #e63e50;
+}
 
-    ul {
-        list-style: none;
-        padding: 0;
-    }
-
-    li {
-        background: #ffe5e8;
-        margin: 5px;
-        padding: 10px;
-        border-radius: 8px;
-    }
+li {
+    background: #ffe5e8;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 8px;
+}
 </style>
 </head>
 
 <body>
 
-<h1>🚨 Emergency Blood Circle</h1>
+<h1>🚨 Blood Priority Queue</h1>
 
 <div class="container">
 
-    <h3>Add Member</h3>
-    <input type="text" id="name" placeholder="Name">
-    <input type="text" id="blood" placeholder="Blood Group (Ex: O+)">
-    <button onclick="addMember()">Add Member</button>
+    <h3>Add Emergency Patient</h3>
+    <input type="text" id="pname" placeholder="Patient Name">
+    <input type="text" id="pblood" placeholder="Blood Group (Ex: O+)">
 
-    <hr>
-
-    <h3>Emergency Request</h3>
-    <input type="text" id="needBlood" placeholder="Required Blood (Ex: O+)">
-
-    <!-- NEW PRIORITY DROPDOWN -->
     <select id="priority">
         <option value="3">🔴 Critical</option>
         <option value="2">🟠 Medium</option>
         <option value="1">🟢 Low</option>
     </select>
 
-    <button onclick="sendAlert()">Send Alert</button>
+    <button onclick="addRequest()">Add Request</button>
 
-    <h3>Alert Sent To:</h3>
+    <hr>
+
+    <!-- NEW BUTTON -->
+    <button onclick="showAllRequests()">View All Requests</button>
+
+    <button onclick="showPriority()">Show Priority Order</button>
+
+    <h3>Output:</h3>
     <ul id="result"></ul>
 
 </div>
 
 <script>
-    function getMembers() {
-        return JSON.parse(localStorage.getItem("circle")) || [];
+
+// Get data
+function getRequests() {
+    return JSON.parse(localStorage.getItem("requests")) || [];
+}
+
+// Save data
+function saveRequests(data) {
+    localStorage.setItem("requests", JSON.stringify(data));
+}
+
+// Add request
+function addRequest() {
+    let name = document.getElementById("pname").value;
+    let blood = document.getElementById("pblood").value;
+    let priority = parseInt(document.getElementById("priority").value);
+
+    if(name === "" || blood === "") {
+        alert("⚠ Fill all fields");
+        return;
     }
 
-    function saveMembers(data) {
-        localStorage.setItem("circle", JSON.stringify(data));
+    let requests = getRequests();
+
+    requests.push({
+        name: name,
+        blood: blood,
+        priority: priority,
+        time: Date.now()
+    });
+
+    saveRequests(requests);
+
+    alert("✅ Request Added");
+
+    document.getElementById("pname").value = "";
+    document.getElementById("pblood").value = "";
+}
+
+// 🔥 SHOW ALL REQUESTS (NEW)
+function showAllRequests() {
+    let requests = getRequests();
+    let list = document.getElementById("result");
+    list.innerHTML = "";
+
+    if (requests.length === 0) {
+        list.innerHTML = "<li>No requests found</li>";
+        return;
     }
 
-    function addMember() {
-        let name = document.getElementById("name").value;
-        let blood = document.getElementById("blood").value;
+    requests.forEach((r, index) => {
+        let li = document.createElement("li");
 
-        if(name === "" || blood === "") {
-            alert("⚠ Please fill all fields");
-            return;
+        let pText = r.priority == 3 ? "🔴 Critical" :
+                    r.priority == 2 ? "🟠 Medium" : "🟢 Low";
+
+        li.textContent =
+            (index + 1) + ". " + r.name +
+            " (" + r.blood + ") - " + pText;
+
+        list.appendChild(li);
+    });
+}
+
+// SORTED PRIORITY VIEW
+function showPriority() {
+    let requests = getRequests();
+
+    requests.sort((a, b) => {
+        if (b.priority !== a.priority) {
+            return b.priority - a.priority;
         }
+        return a.time - b.time;
+    });
 
-        let members = getMembers();
-        members.push({ name, blood });
+    let list = document.getElementById("result");
+    list.innerHTML = "";
 
-        saveMembers(members);
+    requests.forEach((r, index) => {
+        let li = document.createElement("li");
 
-        alert("✅ Member added!");
+        let pText = r.priority == 3 ? "🔴 Critical" :
+                    r.priority == 2 ? "🟠 Medium" : "🟢 Low";
 
-        document.getElementById("name").value = "";
-        document.getElementById("blood").value = "";
-    }
+        li.textContent =
+            (index + 1) + "️⃣ " + r.name +
+            " (" + r.blood + ") - " + pText;
 
-    function sendAlert() {
-        let needBlood = document.getElementById("needBlood").value;
-        let priority = parseInt(document.getElementById("priority").value);
+        list.appendChild(li);
+    });
+}
 
-        let members = getMembers();
-
-        // Filter matching donors
-        let matched = members.filter(m =>
-            m.blood === needBlood || m.blood === "O-"
-        );
-
-        // Assign priority to each match
-        matched.forEach(m => {
-            m.priority = priority;
-        });
-
-        // Sort by priority (HIGH → LOW)
-        matched.sort((a, b) => b.priority - a.priority);
-
-        let list = document.getElementById("result");
-        list.innerHTML = "";
-
-        if (matched.length === 0) {
-            list.innerHTML = "<li>❌ No members found</li>";
-        } else {
-            matched.forEach(m => {
-                let li = document.createElement("li");
-
-                let pText = m.priority == 3 ? "🔴 Critical" :
-                            m.priority == 2 ? "🟠 Medium" : "🟢 Low";
-
-                li.textContent = "🚨 " + m.name + " (" + m.blood + ") - " + pText;
-
-                list.appendChild(li);
-            });
-        }
-    }
 </script>
 
 </body>
