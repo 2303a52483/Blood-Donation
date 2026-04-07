@@ -2,71 +2,130 @@
 <html>
 
 <head>
-     <title>Admin Dashboard</title>
-     <link rel="stylesheet" href="style.css">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        header h1 {
+            text-align: center;
+            color: #b30000;
+        }
+
+        section.admin-container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .box {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: #b30000;
+        }
+    </style>
 </head>
 
 <body>
 
-     <header>
-          <h1>🛠 Admin Dashboard</h1>
-     </header>
+<header>
+    <h1>🩸 Blood Donation Admin Dashboard</h1>
+</header>
 
-     <section class="admin-container">
+<section class="admin-container">
 
-          <h2>👤 Users</h2>
-          <div id="users"></div>
+    <div class="box">
+        <h2>👤 Users</h2>
+        <div id="users">Loading...</div>
+    </div>
 
-          <h2>❤️ Donors</h2>
-          <div id="donors"></div>
+    <div class="box">
+        <h2>❤️ Donors</h2>
+        <div id="donors">Loading...</div>
+    </div>
 
-          <h2>🆘 Requests</h2>
-          <div id="requests"></div>
+    <div class="box">
+        <h2>🆘 Requests</h2>
+        <div id="requests">Loading...</div>
+    </div>
 
-          <h2>📰 Blogs</h2>
-          <div id="blogs"></div>
+    <div class="box">
+        <h2>📰 Blogs</h2>
+        <div id="blogs">Loading...</div>
+    </div>
 
-          <h2>🔢 Counts</h2>
-          <div id="counts"></div>
+    <div class="box">
+        <h2>🔢 Counts</h2>
+        <div id="counts">Loading...</div>
+    </div>
 
-     </section>
+</section>
 
-     <script>
-          fetch('/admin-data')
-               .then(res => res.json())
-               .then(data => {
+<script>
+    // Function to safely get data from localStorage
+    function getData(key) {
+        return JSON.parse(localStorage.getItem(key)) || [];
+    }
 
-                    // USERS
-                    document.getElementById("users").innerHTML =
-                         data.users.map(u =>
-                              `<p>${u.name} (${u.email}) - ${u.blood}</p>`
-                         ).join("");
+    function loadAdmin() {
 
-                    // DONORS
-                    document.getElementById("donors").innerHTML =
-                         data.donors.map(d =>
-                              `<p>${d.name} - ${d.blood} (${d.location})</p>`
-                         ).join("");
+        // Get data from localStorage
+        const users = getData("users");
+        const donors = getData("donors");
+        const requests = getData("requests");
+        const blogs = getData("blogs");
 
-                    // REQUESTS
-                    document.getElementById("requests").innerHTML =
-                         data.requests.map(r =>
-                              `<p>${r.name} needs ${r.blood} in ${r.city}</p>`
-                         ).join("");
+        // USERS
+        document.getElementById("users").innerHTML =
+            users.length ?
+            users.map(u => `<p>${u.name} (${u.email || "No Email"}) - ${u.blood || "N/A"}</p>`).join("") :
+            "<p>No users found</p>";
 
-                    // BLOGS
-                    document.getElementById("blogs").innerHTML =
-                         data.blogs.map(b =>
-                              `<p><b>${b.title}</b>: ${b.content}</p>`
-                         ).join("");
+        // DONORS
+        document.getElementById("donors").innerHTML =
+            donors.length ?
+            donors.map(d => `<p>${d.name} - ${d.blood} (${d.location || "Unknown"})</p>`).join("") :
+            "<p>No donors found</p>";
 
-                    // COUNTS
-                    document.getElementById("counts").innerHTML =
-                         `<p>Signup: ${data.count.signup}</p>
-         <p>Login: ${data.count.login}</p>`;
-               });
-     </script>
+        // REQUESTS (priority aware)
+        document.getElementById("requests").innerHTML =
+            requests.length ?
+            requests.map(r => {
+                const priority =
+                    r.priority == 3 ? "🔴 Critical" :
+                    r.priority == 2 ? "🟠 Medium" :
+                    r.priority == 1 ? "🟢 Low" : "⚪ Normal";
+
+                return `<p>${r.name} needs ${r.blood} - ${priority} (${r.city || "Unknown"})</p>`;
+            }).join("") :
+            "<p>No requests found</p>";
+
+        // BLOGS
+        document.getElementById("blogs").innerHTML =
+            blogs.length ?
+            blogs.map(b => `<p><b>${b.title}</b>: ${b.content}</p>`).join("") :
+            "<p>No blogs found</p>";
+
+        // COUNTS
+        document.getElementById("counts").innerHTML = `
+            <p>Users: ${users.length}</p>
+            <p>Donors: ${donors.length}</p>
+            <p>Requests: ${requests.length}</p>
+            <p>Blogs: ${blogs.length}</p>
+        `;
+    }
+
+    // Load admin data when page opens
+    window.onload = loadAdmin;
+</script>
 
 </body>
-
 </html>
