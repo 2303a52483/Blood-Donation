@@ -1,57 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background:#f5f5f5; }
+        h1 { text-align:center; }
+        h2 { color: red; }
+        .box { border: 1px solid #ccc; padding: 15px; margin: 15px; border-radius:10px; background:white; }
+        button {
+            padding:5px 10px;
+            margin:5px;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+        }
+        .delete { background:red; color:white; }
+        .refresh { background:green; color:white; }
+        .clear { background:black; color:white; }
+    </style>
+</head>
+
+<body>
+
+<h1>🩸 Blood Donation Admin Dashboard</h1>
+
+<div style="text-align:center;">
+    <button class="refresh" onclick="loadData()">🔄 Refresh</button>
+    <button class="clear" onclick="clearAll()">🗑 Clear All Data</button>
+</div>
+
+<div class="box">
+    <h2>👤 Total Signed Up Users</h2>
+    <p id="signupCount"></p>
+</div>
+
+<div class="box">
+    <h2>🔑 Logged In Users</h2>
+    <p id="loginCount"></p>
+</div>
+
+<div class="box">
+    <h2>❤️ Donors List</h2>
+    <div id="donorList"></div>
+</div>
+
+<div class="box">
+    <h2>🆘 Blood Requests</h2>
+    <div id="requestList"></div>
+</div>
+
 <script>
 
-// Helper to get data from multiple possible keys
-function getData(keys) {
-    for (let key of keys) {
-        let data = JSON.parse(localStorage.getItem(key));
-        if (data && data.length > 0) {
-            return data;
-        }
+// Helper
+function getData(key) {
+    return JSON.parse(localStorage.getItem(key)) || [];
+}
+
+// Load all data
+function loadData() {
+
+    // USERS
+    let users = getData("users");
+    document.getElementById("signupCount").innerText = users.length;
+
+    // LOGINS
+    let logins = getData("logins");
+    document.getElementById("loginCount").innerText = logins.length;
+
+    // DONORS
+    let donors = getData("donors");
+    let donorHTML = "";
+
+    if (donors.length === 0) {
+        donorHTML = "<p>No donors</p>";
+    } else {
+        donors.forEach((d, index) => {
+            donorHTML += `
+                <p>
+                    ❤️ ${d.name} - ${d.blood}
+                    <button class="delete" onclick="deleteDonor(${index})">Delete</button>
+                </p>`;
+        });
     }
-    return [];
+    document.getElementById("donorList").innerHTML = donorHTML;
+
+    // REQUESTS
+    let requests = getData("requests");
+    let requestHTML = "";
+
+    if (requests.length === 0) {
+        requestHTML = "<p>No requests</p>";
+    } else {
+        requests.forEach((r, index) => {
+
+            let priority =
+                r.priority == 3 ? "🔴 Critical" :
+                r.priority == 2 ? "🟠 Medium" :
+                r.priority == 1 ? "🟢 Low" : "⚪ Normal";
+
+            requestHTML += `
+                <p>
+                    🆘 ${r.name} needs ${r.blood} - ${priority}
+                    <button class="delete" onclick="deleteRequest(${index})">Delete</button>
+                </p>`;
+        });
+    }
+    document.getElementById("requestList").innerHTML = requestHTML;
 }
 
-// SIGNUP COUNT (try different keys)
-let users = getData(["users", "signupUsers"]);
-document.getElementById("signupCount").innerText = users.length;
-
-// LOGIN COUNT
-let logins = getData(["logins", "loginUsers"]);
-document.getElementById("loginCount").innerText = logins.length;
-
-// DONORS LIST
-let donors = getData(["donors", "circle", "members"]);
-let donorHTML = "";
-
-if (donors.length === 0) {
-    donorHTML = "<p>No donors found</p>";
-} else {
-    donors.forEach(d => {
-        donorHTML += `<p>❤️ ${d.name} - ${d.blood}</p>`;
-    });
-}
-document.getElementById("donorList").innerHTML = donorHTML;
-
-
-// REQUESTS LIST (with priority support)
-let requests = getData(["requests", "bloodRequests"]);
-let requestHTML = "";
-
-if (requests.length === 0) {
-    requestHTML = "<p>No requests found</p>";
-} else {
-    requests.forEach(r => {
-
-        let priorityText = "";
-        if (r.priority == 3) priorityText = "🔴 Critical";
-        else if (r.priority == 2) priorityText = "🟠 Medium";
-        else if (r.priority == 1) priorityText = "🟢 Low";
-        else priorityText = "⚪ Normal";
-
-        requestHTML += `<p>🆘 ${r.name} needs ${r.blood} - ${priorityText}</p>`;
-    });
+// DELETE DONOR
+function deleteDonor(index) {
+    let donors = getData("donors");
+    donors.splice(index, 1);
+    localStorage.setItem("donors", JSON.stringify(donors));
+    loadData();
 }
 
-document.getElementById("requestList").innerHTML = requestHTML;
+// DELETE REQUEST
+function deleteRequest(index) {
+    let requests = getData("requests");
+    requests.splice(index, 1);
+    localStorage.setItem("requests", JSON.stringify(requests));
+    loadData();
+}
+
+// CLEAR ALL DATA
+function clearAll() {
+    if(confirm("⚠ Are you sure to delete ALL data?")) {
+        localStorage.clear();
+        loadData();
+    }
+}
+
+// LOAD ON START
+loadData();
 
 </script>
+
+</body>
+</html>
