@@ -2,128 +2,201 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Emergency Circle Widget</title>
+<title>Admin Dashboard - Blood Donation Hub</title>
 <style>
-/* Emergency Circle Styles */
-#emergencyCircle {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 80px;
-    height: 80px;
-    background: red;
+body {
+    font-family: Arial;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #e74c3c;
     color: white;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 80px;
-    font-weight: bold;
-    cursor: pointer;
-    z-index: 999;
-}
-#emergencyPanel {
-    display: none;
-    position: fixed;
-    bottom: 120px;
-    right: 30px;
-    width: 320px;
-    background: #fff;
-    border: 2px solid red;
-    border-radius: 10px;
     padding: 15px;
-    z-index: 1000;
+    text-align: center;
 }
-#emergencyPanel h3 { margin-top: 0; color: red; }
-#emergencyPanel input, #emergencyPanel select, #emergencyPanel button {
+
+nav a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container {
+    width: 95%;
+    max-width: 1000px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+h2 { color: #e74c3c; }
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.stats div {
+    background: #f8f8f8;
+    padding: 15px;
+    border-radius: 10px;
+    width: 22%;
+    text-align: center;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+}
+
+table {
     width: 100%;
-    padding: 7px;
-    margin: 5px 0;
+    border-collapse: collapse;
+    margin-top: 15px;
 }
-#emergencyList {
-    max-height: 200px;
-    overflow-y: auto;
-    border-top: 1px solid #ccc;
-    margin-top: 10px;
+
+table, th, td {
+    border: 1px solid #ccc;
 }
-.item { padding: 5px; border-bottom: 1px solid #eee; }
-.priority-1 { color: red; font-weight: bold; }
-.priority-2 { color: orange; }
-.priority-3 { color: green; }
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th { background: #f2f2f2; }
+
+button {
+    padding: 5px 10px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #c0392b;
+}
 </style>
 </head>
 <body>
 
-<!-- Emergency Circle -->
-<div id="emergencyCircle">⚠️</div>
+<header>
+    <h1>🩸 Blood Donation Hub - Admin Dashboard</h1>
+    <nav>
+        <a href="admin.html">Dashboard</a>
+        <a href="index.html">User Page</a>
+    </nav>
+</header>
 
-<!-- Emergency Panel -->
-<div id="emergencyPanel">
-    <h3>Emergency Requests</h3>
+<div class="container">
 
-    <!-- Add Member -->
-    <input type="text" id="memberName" placeholder="Member Name">
-    <input type="text" id="memberBlood" placeholder="Blood Group">
-    <select id="memberPriority">
-        <option value="1">High Priority</option>
-        <option value="2">Medium Priority</option>
-        <option value="3">Low Priority</option>
-    </select>
-    <button id="addMemberBtn">Add Member</button>
+    <h2>Statistics</h2>
+    <div class="stats">
+        <div>
+            <h3>Signed Up Users</h3>
+            <p id="signedUpCount">0</p>
+        </div>
+        <div>
+            <h3>Logged In Users</h3>
+            <p id="loggedInCount">0</p>
+        </div>
+        <div>
+            <h3>Blood Donations</h3>
+            <p id="donationCount">0</p>
+        </div>
+        <div>
+            <h3>Blood Requests</h3>
+            <p id="requestCount">0</p>
+        </div>
+    </div>
 
-    <!-- Emergency List -->
-    <div id="emergencyList"></div>
+    <h2>Donors List</h2>
+    <table id="donorTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Blood Group</th>
+                <th>Donated To</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 
-    <!-- Send Alert -->
-    <button id="sendAlertBtn" style="background:red; color:white; margin-top:10px;">Send Alert</button>
+    <h2>Patient Requests</h2>
+    <table id="patientTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Blood Group</th>
+                <th>Priority</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
 </div>
 
 <script>
-// Toggle Panel
-const circle = document.getElementById('emergencyCircle');
-const panel = document.getElementById('emergencyPanel');
-circle.addEventListener('click', () => {
-    panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-});
+// Admin page reads actual login/sign-up info from localStorage
 
-// Emergency Data
-let emergencies = [];
+// Assume your login/signup page saves users like this:
+// localStorage.setItem("users", JSON.stringify([
+//   {name:"Navya", blood:"A+", signedUp:true, loggedIn:true},
+//   {name:"Sushma", blood:"B+", signedUp:true, loggedIn:false}
+// ]));
 
-// Add Member
-document.getElementById('addMemberBtn').addEventListener('click', () => {
-    const name = document.getElementById('memberName').value.trim();
-    const blood = document.getElementById('memberBlood').value.trim();
-    const priority = parseInt(document.getElementById('memberPriority').value);
-    if(name && blood) {
-        emergencies.push({ name, blood, priority });
-        emergencies.sort((a,b)=>a.priority-b.priority); // Sort by priority
-        updateList();
-        document.getElementById('memberName').value = '';
-        document.getElementById('memberBlood').value = '';
-    }
-});
+// Assume donors and requests saved as before
+// donors = [{name, blood, donatedTo:[]}]
+// requests = [{name, blood, priority, time}]
 
-// Update List
-function updateList() {
-    const list = document.getElementById('emergencyList');
-    list.innerHTML = emergencies.map(e => `
-        <div class="item priority-${e.priority}">
-            ${e.name} (${e.blood}) - Priority: ${e.priority}
-            <button onclick="donateBlood('${e.name}')">Donate</button>
-        </div>
-    `).join('');
+function getUsers() { return JSON.parse(localStorage.getItem("users")) || []; }
+function getDonors() { return JSON.parse(localStorage.getItem("donors")) || []; }
+function getRequests() { return JSON.parse(localStorage.getItem("requests")) || []; }
+
+function displayStats() {
+    const users = getUsers();
+    const donors = getDonors();
+    const requests = getRequests();
+
+    document.getElementById("signedUpCount").textContent = users.filter(u=>u.signedUp).length;
+    document.getElementById("loggedInCount").textContent = users.filter(u=>u.loggedIn).length;
+    document.getElementById("donationCount").textContent = donors.reduce((acc,d)=>acc + (d.donatedTo ? d.donatedTo.length:0),0);
+    document.getElementById("requestCount").textContent = requests.length;
 }
 
-// Donate Blood
-function donateBlood(name) {
-    alert(`Blood donation alert sent for ${name}!`);
-    emergencies = emergencies.filter(e => e.name !== name);
-    updateList();
+function displayDonors() {
+    const donors = getDonors();
+    const donorTableBody = document.querySelector("#donorTable tbody");
+    donorTableBody.innerHTML = "";
+    donors.forEach(d=>{
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${d.name}</td><td>${d.blood}</td><td>${d.donatedTo ? d.donatedTo.join(", ") : ""}</td>`;
+        donorTableBody.appendChild(row);
+    });
 }
 
-// Send General Alert
-document.getElementById('sendAlertBtn').addEventListener('click', () => {
-    if(emergencies.length === 0) return alert('No emergencies to alert!');
-    alert('Emergency alert sent to all members!');
-});
+function displayPatients() {
+    const requests = getRequests();
+    requests.sort((a,b)=> b.priority - a.priority || a.time - b.time);
+    const patientTableBody = document.querySelector("#patientTable tbody");
+    patientTableBody.innerHTML = "";
+    requests.forEach(r=>{
+        const priorityText = r.priority==3?"Critical":r.priority==2?"Medium":"Low";
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${r.name}</td><td>${r.blood}</td><td>${priorityText}</td><td>${new Date(r.time).toLocaleString()}</td>`;
+        patientTableBody.appendChild(row);
+    });
+}
+
+// Initial render
+displayStats();
+displayDonors();
+displayPatients();
 </script>
 
 </body>
