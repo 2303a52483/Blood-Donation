@@ -1,141 +1,72 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Admin Dashboard</title>
-    <style>
-        body { font-family: Arial; padding: 20px; background:#f5f5f5; }
-        h1 { text-align:center; }
-        h2 { color: red; }
-        .box { border: 1px solid #ccc; padding: 15px; margin: 15px; border-radius:10px; background:white; }
-        button {
-            padding:5px 10px;
-            margin:5px;
-            border:none;
-            border-radius:5px;
-            cursor:pointer;
-        }
-        .delete { background:red; color:white; }
-        .refresh { background:green; color:white; }
-        .clear { background:black; color:white; }
-    </style>
+     <title>Admin Dashboard</title>
+     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h1>🩸 Blood Donation Admin Dashboard</h1>
+     <header>
+          <h1>🛠 Admin Dashboard</h1>
+     </header>
 
-<div style="text-align:center;">
-    <button class="refresh" onclick="loadData()">🔄 Refresh</button>
-    <button class="clear" onclick="clearAll()">🗑 Clear All Data</button>
-</div>
+     <section class="admin-container">
 
-<div class="box">
-    <h2>👤 Total Signed Up Users</h2>
-    <p id="signupCount"></p>
-</div>
+          <h2>👤 Users</h2>
+          <div id="users"></div>
 
-<div class="box">
-    <h2>🔑 Logged In Users</h2>
-    <p id="loginCount"></p>
-</div>
+          <h2>❤️ Donors</h2>
+          <div id="donors"></div>
 
-<div class="box">
-    <h2>❤️ Donors List</h2>
-    <div id="donorList"></div>
-</div>
+          <h2>🆘 Requests</h2>
+          <div id="requests"></div>
 
-<div class="box">
-    <h2>🆘 Blood Requests</h2>
-    <div id="requestList"></div>
-</div>
+          <h2>📰 Blogs</h2>
+          <div id="blogs"></div>
 
-<script>
+          <h2>🔢 Counts</h2>
+          <div id="counts"></div>
 
-// Helper
-function getData(key) {
-    return JSON.parse(localStorage.getItem(key)) || [];
-}
+     </section>
 
-// Load all data
-function loadData() {
+     <script>
+          fetch('/admin-data')
+               .then(res => res.json())
+               .then(data => {
 
-    // USERS
-    let users = getData("users");
-    document.getElementById("signupCount").innerText = users.length;
+                    // USERS
+                    document.getElementById("users").innerHTML =
+                         data.users.map(u =>
+                              `<p>${u.name} (${u.email}) - ${u.blood}</p>`
+                         ).join("");
 
-    // LOGINS
-    let logins = getData("logins");
-    document.getElementById("loginCount").innerText = logins.length;
+                    // DONORS
+                    document.getElementById("donors").innerHTML =
+                         data.donors.map(d =>
+                              `<p>${d.name} - ${d.blood} (${d.location})</p>`
+                         ).join("");
 
-    // DONORS
-    let donors = getData("donors");
-    let donorHTML = "";
+                    // REQUESTS
+                    document.getElementById("requests").innerHTML =
+                         data.requests.map(r =>
+                              `<p>${r.name} needs ${r.blood} in ${r.city}</p>`
+                         ).join("");
 
-    if (donors.length === 0) {
-        donorHTML = "<p>No donors</p>";
-    } else {
-        donors.forEach((d, index) => {
-            donorHTML += `
-                <p>
-                    ❤️ ${d.name} - ${d.blood}
-                    <button class="delete" onclick="deleteDonor(${index})">Delete</button>
-                </p>`;
-        });
-    }
-    document.getElementById("donorList").innerHTML = donorHTML;
+                    // BLOGS
+                    document.getElementById("blogs").innerHTML =
+                         data.blogs.map(b =>
+                              `<p><b>${b.title}</b>: ${b.content}</p>`
+                         ).join("");
 
-    // REQUESTS
-    let requests = getData("requests");
-    let requestHTML = "";
-
-    if (requests.length === 0) {
-        requestHTML = "<p>No requests</p>";
-    } else {
-        requests.forEach((r, index) => {
-
-            let priority =
-                r.priority == 3 ? "🔴 Critical" :
-                r.priority == 2 ? "🟠 Medium" :
-                r.priority == 1 ? "🟢 Low" : "⚪ Normal";
-
-            requestHTML += `
-                <p>
-                    🆘 ${r.name} needs ${r.blood} - ${priority}
-                    <button class="delete" onclick="deleteRequest(${index})">Delete</button>
-                </p>`;
-        });
-    }
-    document.getElementById("requestList").innerHTML = requestHTML;
-}
-
-// DELETE DONOR
-function deleteDonor(index) {
-    let donors = getData("donors");
-    donors.splice(index, 1);
-    localStorage.setItem("donors", JSON.stringify(donors));
-    loadData();
-}
-
-// DELETE REQUEST
-function deleteRequest(index) {
-    let requests = getData("requests");
-    requests.splice(index, 1);
-    localStorage.setItem("requests", JSON.stringify(requests));
-    loadData();
-}
-
-// CLEAR ALL DATA
-function clearAll() {
-    if(confirm("⚠ Are you sure to delete ALL data?")) {
-        localStorage.clear();
-        loadData();
-    }
-}
-
-// LOAD ON START
-loadData();
-
-</script>
+                    // COUNTS
+                    document.getElementById("counts").innerHTML =
+                         `<p>Signup: ${data.count.signup}</p>
+         <p>Login: ${data.count.login}</p>`;
+               });
+     </script>
 
 </body>
+
 </html>
